@@ -3,10 +3,11 @@ package projectOne.file;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import projectOne.models.Tuple;
 
 public class FileManager {
-	private String _projectPath = null;
-
+	public static String _projectPath = null;
+	public static ArrayList<Tuple> students = new ArrayList<Tuple>();
 	private FileManager(){
 		URI absolutePath;
 		try {
@@ -84,10 +85,23 @@ public class FileManager {
 		try{
 			br = new BufferedReader(new FileReader(_projectPath + fileName));
 			String str = null;
-			for(int i = 0 ; i < maxLines; i++)
-			{
-				if((str = br.readLine()) == null) break;
+			for (int j = 0; j < maxLines; j++) {
+				if ((str = br.readLine()) == null)
+					break;
 				res.add(str);
+
+			}
+			students = new ArrayList<Tuple>();
+			for (int i = 0; i < res.size(); i++) {
+				Tuple t = new Tuple();
+				t.setID(Integer.parseInt(res.get(i).substring(0, 8)));
+				t.setFirstName(res.get(i).substring(8, 17));
+				t.setLastName(res.get(i).substring(18, 27));
+				t.setDepartment(Integer.parseInt(res.get(i).substring(28, 31)));
+				t.setProgram(Integer.parseInt(res.get(i).substring(31, 34)));
+				t.setSINNumber(Integer.parseInt(res.get(i).substring(34, 43)));
+				t.setAddress(res.get(i).substring(43));
+				students.add(t);
 			}
 		}
 		catch(Exception ex)
@@ -128,4 +142,15 @@ public class FileManager {
 		}
 		return res;
 	}
+	public static void clearFile(String fileName)
+	{
+		try {
+			PrintWriter pw = new PrintWriter(_projectPath + fileName);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }
+
