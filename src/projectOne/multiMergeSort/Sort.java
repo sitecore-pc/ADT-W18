@@ -22,17 +22,22 @@ public class Sort {
 	private static int count = 0;
 	private static ArrayList<String> fileNames = new ArrayList<String>();
 	
-	public static void DoSort() {
-		Sort.DivideFile("T1");
-		Sort.DivideFile("T2");
+	public static int[] DoSort() {
+		int[] sublists = new int[2];
+		
+		sublists[0] = Sort.DivideFile(Parameters.dataFiles[0]);
+		sublists[1] = Sort.DivideFile(Parameters.dataFiles[1]);
+		
 		for (String temp : fileNames) {
 			Sort.Read_Sort(temp);
 		}
+		
+		return sublists;
 	}
 	
-	private static void DivideFile(String FileName) {
+	private static int DivideFile(String FileName) {
 		try {
-			String inputfile = fm._projectPath + FileName + ".txt";
+			String inputfile = FileManager._projectPath + FileName;
 			double nol = Parameters.tuplesPerBlock; // maximum tuples stored in one block
 			File file = new File(inputfile);
 			Scanner scanner = new Scanner(file);
@@ -64,7 +69,7 @@ public class Sort {
 			String strLine;
 
 			for (int j = 1; j <= nof; j++) {
-				FileWriter fstream1 = new FileWriter(fm._projectPath + FileName + j + ".txt"); // Destination File
+				FileWriter fstream1 = new FileWriter(FileManager._projectPath + FileName + j + ".txt"); // Destination File
 																								// Location
 
 				BufferedWriter out = new BufferedWriter(fstream1);
@@ -78,15 +83,18 @@ public class Sort {
 					}
 				}
 
-				String path = fm._projectPath;
+				String path = FileManager._projectPath;
 				path = path.substring(1);
 				fileNames.add(FileName + j + ".txt");
 				out.close();
 			}
 
 			in.close();
+			
+			return count;
 		} catch (Exception e) {
 			System.err.println("Error: " + e.getMessage());
+			return -1;
 		}
 
 	}

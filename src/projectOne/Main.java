@@ -1,5 +1,6 @@
 package projectOne;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -9,8 +10,12 @@ import projectOne.multiMergeSort.*;
 
 public class Main {
 
-	public static void main(String[] args) {
-		Sort.DoSort();
+	public static void main(String[] args) throws IOException {
+		ClearTempFiles();
+		
+		int sublists[] = Sort.DoSort();
+		MultiMerge.doMerge("T1", sublists[0]);
+		MultiMerge.doMerge("T2", sublists[1]);
 	}
 
 	public static void TestFileAndTuple() {
@@ -59,5 +64,9 @@ public class Main {
 			Tuple student = studentsIterator.next();
 			System.out.println(student.toString());
 		}
+	}
+	
+	private static void ClearTempFiles() {
+		// TODO: Delete any existing text files (besides T1.txt and T2.txt) before starting
 	}
 }
