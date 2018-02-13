@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import projectOne.file.FileManager;
+import projectOne.models.Tuple;
 
 
 // TODO: Patrick add counters as needed
@@ -46,13 +47,53 @@ public class MultiMerge {
 	 * Merges files from sublist, returns name of file containing merged list
 	 */
 	private static String partialMerge(List<String> sublist) {
+		Tuple[] entryCache = new Tuple[sublist.size()];
+		FileManager[] readControllers = new FileManager[sublist.size()];
+		String targetFilename = "mergetemp_" + System.nanoTime() + ".txt";
+		FileManager target = new FileManager(targetFilename);
 		
-		// TODO: patrick
-		
-		
-		
-		return null;
+		// open each file of the sublist
+		for (String file : sublist) {
+			// open file
+			// read one line to entryCache
+		}
+
+		// merge loop
+		int lowest;
+		while (true) {
+			lowest = getIndexOfLowest(entryCache);
+			
+			if (lowest == -1)  // boundary condition
+				break;
+			
+			// write lowest to target file
+			target.appendFile(entryCache[lowest].toString());
+			
+			// get the next line from the sublist we just took from
+			// (if file is empty, get null
+			entryCache[lowest].parse(readControllers[lowest].readLine());		
+		}
+
+		return targetFilename;
 	}
+	
+	/***
+	 * Returns -1 when all records are null
+	 */
+	private static int getIndexOfLowest(Tuple[] array) {
+		int result = -1;
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] != null) {
+				if (result == -1)
+					result = i;
+				else
+					if (array[i].getID() < array[result].getID())
+						result = i;
+			}
+		}
+		return result;
+	}
+	
 	
 	private static boolean rename(String from, String to) {
 		// ref: https://stackoverflow.com/questions/1158777/rename-a-file-using-java
