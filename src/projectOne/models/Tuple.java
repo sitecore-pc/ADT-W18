@@ -124,6 +124,10 @@ public class Tuple extends Object implements IConvertable{
 		catch (Exception ex) { }
 	}
 	
+	public static Tuple Parse(String string){
+		return new Tuple(string);
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();

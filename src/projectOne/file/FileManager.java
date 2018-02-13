@@ -5,6 +5,7 @@ import java.net.*;
 import java.util.ArrayList;
 import projectOne.models.Tuple;
 
+@Deprecated
 public class FileManager {
 	public static String _projectPath = null;
 	public static ArrayList<Tuple> students = new ArrayList<Tuple>();
@@ -142,6 +143,7 @@ public class FileManager {
 		}
 		return res;
 	}
+	
 	public static void clearFile(String fileName)
 	{
 		try {

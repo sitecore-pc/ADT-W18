@@ -13,9 +13,41 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		ClearTempFiles();
 		
+		
 		int sublists[] = Sort.DoSort();
 		MultiMerge.doMerge("T1", sublists[0]);
 		MultiMerge.doMerge("T2", sublists[1]);
+		
+		//TestFileManagerV2();
+	}
+	
+	public static void TestFileManagerV2(){
+		IFileManager f1 = new FileManagerV2("F1.txt");
+		IFileManager f2 = new FileManagerV2("F2.txt");
+		IFileManager f3 = new FileManagerV2("F3.txt");
+		
+		
+		f1.cleanFile();
+		f2.cleanFile();
+		f3.cleanFile();
+		
+		
+		System.out.println("---Testing F1---");
+		f1.writeLine("Hi");
+		System.out.println(f1.readNextLine());
+		f1.writeLine("How are you?");
+		f1.writeLine("I'm well thanks.");
+		System.out.println(f1.readNextLine());
+		System.out.println(f1.readNextLine());
+		
+		System.out.println("\n---Testing F2---");
+		f2.writeLine("Second file");
+		f2.writeLines(new String[]{"Line1", "Line2", "Line3"});//Simply an array of lines
+		String[] lines = f2.readNextLines(10);
+		for(int i = 0; i < lines.length; i++)
+			System.out.println(lines[i]);
+		
+		f3.deleteFile();
 	}
 
 	public static void TestFileAndTuple() {
@@ -56,7 +88,15 @@ public class Main {
 		ArrayList<Tuple> reparsedStudents = new ArrayList<Tuple>();
 		for (Iterator<String> studentsIterator = studentStrings.iterator(); studentsIterator.hasNext();) {
 			String stdString = studentsIterator.next();
-			reparsedStudents.add(new Tuple(stdString));
+			//1st option
+			Tuple t = new Tuple(stdString);
+			//2nd option
+			Tuple t2 = new Tuple();
+			t2.parse(stdString);
+			//3rd option
+			Tuple t3 = Tuple.Parse(stdString);
+			
+			reparsedStudents.add(t);
 		}
 
 		// Printing the parsed list again
