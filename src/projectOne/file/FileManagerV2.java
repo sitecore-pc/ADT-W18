@@ -42,6 +42,14 @@ public class FileManagerV2 implements IFileManager {
 		return _bufferedReader;
 	}
 	
+	private static long _counter = 0;
+	public static long getCounter() {
+		return _counter;
+	}
+	private static void incrementCounter() {
+		_counter++;
+	}
+	
 	private boolean initWriter() {
 		String fileAddress = getFullFileAddress();
 		if(fileAddress == null || fileAddress.isEmpty()) return false;
@@ -140,6 +148,7 @@ public class FileManagerV2 implements IFileManager {
 		BufferedReader br = getReader();
 		if(br == null) return null;
 		try{
+			incrementCounter();
 			return br.readLine();
 		}
 		catch(Exception ex)
@@ -158,6 +167,7 @@ public class FileManagerV2 implements IFileManager {
 			ArrayList<String> res = new ArrayList<String>();
 			String str = null;
 			for (int j = 0; j < maxLinesQuantity; j++) {
+				incrementCounter();
 				if ((str = br.readLine()) == null)
 					break;
 				res.add(str);
@@ -181,6 +191,7 @@ public class FileManagerV2 implements IFileManager {
 		PrintWriter pr = getWriter();
 		if(pr == null) return false;
 		try {
+			incrementCounter();
 			pr.println(line);
 		    pr.flush();
 		    return true;
@@ -195,8 +206,10 @@ public class FileManagerV2 implements IFileManager {
 		PrintWriter pr = getWriter();
 		if(pr == null) return false;
 		try {
-			for(int i = 0; i < lines.length; i++)
+			for(int i = 0; i < lines.length; i++) {
+				incrementCounter();
 				pr.println(lines[i]);
+			}
 		    pr.flush();
 		    return true;
 		} catch (Exception e) {

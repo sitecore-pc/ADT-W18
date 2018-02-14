@@ -6,6 +6,7 @@ public class Parameters {
 	
 	public static int tuplesPerBlock = 40;
 	
+	public static int maxTuplesFitInMemory = 10;
 	
 	
 }

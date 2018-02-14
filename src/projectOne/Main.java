@@ -1,5 +1,6 @@
 package projectOne;
 
+import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,14 +12,48 @@ import projectOne.multiMergeSort.*;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
+		System.out.println("INIT: Deleting old temporary files...");
 		ClearTempFiles();
 		
-		
+		System.out.println("TPMMS: Sorting...");
+		long startTime = System.nanoTime();
 		int sublists[] = Sort.DoSort();
+		
+		System.out.println("TPMMS: Merging...");
 		MultiMerge.doMerge("T1", sublists[0]);
 		MultiMerge.doMerge("T2", sublists[1]);
+
+		long endTpmmsTime = System.nanoTime();
+		long ioCountTPMMS = FileManagerV2.getCounter();
 		
-		//TestFileManagerV2();
+		System.out.println("BD: Bag Difference...");
+		// TODO: Bag Difference
+		
+		long endTime = System.nanoTime();
+		long ioCountTotal = FileManagerV2.getCounter();
+		
+		// Final output
+		long tpmmsTime = (endTpmmsTime - startTime) / 10^6;
+		long totalTime = (endTime - startTime) / 10^6;
+		System.out.println("Input");
+		System.out.println("-----");
+		System.out.println(" ");
+		System.out.println("Total tuples: TBD");
+		System.out.println("Total blocks: TBD");
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println("TPMMS");
+		System.out.println("-----");
+		System.out.println(" ");
+		System.out.println("Time taken: " + tpmmsTime + "ms");
+		System.out.println("I/O operations: " + ioCountTPMMS);
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println("Total");
+		System.out.println("-----");
+		System.out.println(" ");
+		System.out.println("Time taken: " + totalTime + "ms");
+		System.out.println("I/O operations: " + ioCountTotal);
 	}
 	
 	public static void TestFileManagerV2(){

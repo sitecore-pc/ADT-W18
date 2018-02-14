@@ -5,25 +5,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import projectOne.file.FileManager;
+import projectOne.common.Parameters;
+import projectOne.file.FileManagerV2;
 import projectOne.models.Tuple;
-
-
-// TODO: Patrick add counters as needed
 
 public class MultiMerge {
 
 	public static void doMerge(String sourcePrefix, int numFiles) throws IOException {
 		List<String> files = new ArrayList<String>();
-		String target = FileManager._projectPath + sourcePrefix + "-sorted.txt";
+		String target = sourcePrefix + "-sorted.txt";
 		int currentIndex = 0;
 		
 		// calculate number of files to merge at one time
-		int maxFiles = 1000; // TODO: patrick
+		int maxFiles = Parameters.maxTuplesFitInMemory - 1;
 		
 		// make a list of all the files to merge
 		for (int i = 0; i < numFiles; i++)
-			files.add(FileManager._projectPath + sourcePrefix + i + ".txt");
+			files.add(sourcePrefix + i + ".txt");
 		
 		// Merging loop
 		while (currentIndex < files.size()) {
@@ -48,14 +46,18 @@ public class MultiMerge {
 	 */
 	private static String partialMerge(List<String> sublist) {
 		Tuple[] entryCache = new Tuple[sublist.size()];
-		FileManager[] readControllers = new FileManager[sublist.size()];
+		FileManagerV2[] readControllers = new FileManagerV2[sublist.size()];
 		String targetFilename = "mergetemp_" + System.nanoTime() + ".txt";
-		FileManager target = new FileManager(targetFilename);
+		FileManagerV2 target = new FileManagerV2(targetFilename);
+		target.setFile(targetFilename);
 		
 		// open each file of the sublist
+		int i = 0;
 		for (String file : sublist) {
-			// open file
-			// read one line to entryCache
+			readControllers[i] = new FileManagerV2(file);
+			readControllers[i].setFile(file);
+			entryCache[i].parse(readControllers[i].readNextLine());
+			i++;
 		}
 
 		// merge loop
@@ -67,11 +69,10 @@ public class MultiMerge {
 				break;
 			
 			// write lowest to target file
-			target.appendFile(entryCache[lowest].toString());
+			target.writeLine(entryCache[lowest].toString());
 			
 			// get the next line from the sublist we just took from
-			// (if file is empty, get null
-			entryCache[lowest].parse(readControllers[lowest].readLine());		
+			entryCache[lowest].parse(readControllers[lowest].readNextLine());		
 		}
 
 		return targetFilename;
@@ -93,8 +94,7 @@ public class MultiMerge {
 		}
 		return result;
 	}
-	
-	
+		
 	private static boolean rename(String from, String to) {
 		// ref: https://stackoverflow.com/questions/1158777/rename-a-file-using-java
 		File file = new File(from);
