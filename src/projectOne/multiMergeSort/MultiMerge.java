@@ -78,7 +78,11 @@ public class MultiMerge {
 			target.writeLine(entryCache[lowest].toString());
 			
 			// get the next line from the sublist we just took from
-			entryCache[lowest].parse(readControllers[lowest].readNextLine());		
+			String nextLine = readControllers[lowest].readNextLine();
+			if (nextLine == null) 
+				entryCache[lowest] = null;
+			else
+				entryCache[lowest].parse(nextLine);	
 		}
 
 		return targetFilename;
