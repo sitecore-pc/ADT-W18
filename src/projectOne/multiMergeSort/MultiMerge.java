@@ -11,7 +11,7 @@ import projectOne.models.Tuple;
 
 public class MultiMerge {
 
-	public static void doMerge(String sourcePrefix, int numFiles) throws IOException {
+	public static void doMerge(String sourcePrefix, int numFiles) throws IOException, Exception {
 		List<String> files = new ArrayList<String>();
 		String target = sourcePrefix + "-sorted.txt";
 		int currentIndex = 0;
@@ -43,8 +43,9 @@ public class MultiMerge {
 	
 	/***
 	 * Merges files from sublist, returns name of file containing merged list
+	 * @throws Exception 
 	 */
-	private static String partialMerge(List<String> sublist) {
+	private static String partialMerge(List<String> sublist) throws Exception {
 		Tuple[] entryCache = new Tuple[sublist.size()];
 		FileManagerV2[] readControllers = new FileManagerV2[sublist.size()];
 		String targetFilename = "mergetemp_" + System.nanoTime() + ".txt";
@@ -57,7 +58,11 @@ public class MultiMerge {
 			readControllers[i] = new FileManagerV2(file);
 			readControllers[i].setFile(file);
 			entryCache[i] = new Tuple();
-			entryCache[i].parse(readControllers[i].readNextLine());
+			
+			String firstTuple = readControllers[i].readNextLine();
+			if (firstTuple == null) throw new Exception("The sorted sub-list file " + file + " is empty.");
+						
+			entryCache[i].parse(firstTuple);
 			i++;
 		}
 

@@ -11,7 +11,7 @@ import projectOne.multiMergeSort.*;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		System.out.println("INIT: Deleting old temporary files...");
 		ClearTempFiles();
 		
