@@ -56,6 +56,7 @@ public class MultiMerge {
 		for (String file : sublist) {
 			readControllers[i] = new FileManagerV2(file);
 			readControllers[i].setFile(file);
+			entryCache[i] = new Tuple();
 			entryCache[i].parse(readControllers[i].readNextLine());
 			i++;
 		}
