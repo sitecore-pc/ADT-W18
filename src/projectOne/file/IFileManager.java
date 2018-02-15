@@ -1,6 +1,9 @@
 package projectOne.file;
 
 public interface IFileManager {
+	//Returns the total file rows' count
+	int getTotalNumberOfRows();
+	
 	//Sets the pointing address and Creates the file if not exist
 	void setFile(String fileName);
 	

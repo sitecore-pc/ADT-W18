@@ -114,6 +114,17 @@ public class FileManagerV2 implements IFileManager {
 		return success;
 	}
 
+	public int getTotalNumberOfRows(){
+		try{
+			long totalFileSize = (new File(getFullFileAddress())).length();
+			return (int)(totalFileSize/101);
+		}
+		catch (Exception ex)
+		{
+			return 0;
+		}
+	}
+	
 	public FileManagerV2(String fileName) throws NullPointerException{
 		if(fileName == null || fileName.isEmpty()) throw new NullPointerException("FileName is not specified");
 		_fileName = fileName;

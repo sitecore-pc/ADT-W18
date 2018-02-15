@@ -57,6 +57,20 @@ public class Main {
 	}
 	
 	public static void TestFileManagerV2(){
+		ArrayList<Tuple> students = new ArrayList<Tuple>();
+		try{
+			students.add(new Tuple(11111, "John", "Smith", 111, 222, 123456789, "3340, Maisonneuve, Montreal, QC"));
+			students.add(new Tuple(22222222, "John", "Doe", 333, 333, 987654321, "2100, Maisonneuve, Montreal, QC"));
+			students.add(new Tuple(12345678, "Jane", "Doe", 222, 111, 0,
+					"4850, Cote-des-Neiges H3V1G5 Apt. 1106, Montreal, QC34567"));
+			students.add(new Tuple(88888888, "Jasonsonny", "Jackson890", 8, 0, 999999999,
+					"4858, Cote-des-Neiges H3V1G8 Apt. 803, Montreal, QC345678"));
+		}
+		catch (Exception ex)
+		{
+			
+		}
+		
 		IFileManager f1 = new FileManagerV2("F1.txt");
 		IFileManager f2 = new FileManagerV2("F2.txt");
 		IFileManager f3 = new FileManagerV2("F3.txt");
@@ -77,12 +91,20 @@ public class Main {
 		
 		System.out.println("\n---Testing F2---");
 		f2.writeLine("Second file");
-		f2.writeLines(new String[]{"Line1", "Line2", "Line3"});//Simply an array of lines
+		
+		f2.writeLines(
+				new String[]{
+				students.get(0).toString(), 
+				students.get(1).toString(), 
+				students.get(2).toString(),
+				students.get(3).toString()
+				});//Simply an array of lines
 		String[] lines = f2.readNextLines(10);
 		for(int i = 0; i < lines.length; i++)
 			System.out.println(lines[i]);
 		
 		f3.deleteFile();
+		System.out.println("Number of lines in F2.txt: " + f2.getTotalNumberOfRows());
 	}
 
 	public static void TestFileAndTuple() {
