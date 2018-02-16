@@ -5,6 +5,8 @@ import java.net.*;
 import java.nio.file.*;
 import java.util.ArrayList;
 
+import projectOne.common.Parameters;
+
 public class FileManagerV2 implements IFileManager {
 	
 	private static String _projectPath = null;
@@ -48,6 +50,21 @@ public class FileManagerV2 implements IFileManager {
 	}
 	private static void incrementCounter() {
 		_counter++;
+	}
+	
+	private long _fileSize;
+	private void getSize(){
+		try{
+			File f = new File(getFullFileAddress());
+			if(f.exists())
+				_fileSize = f.length();
+			else
+				_fileSize = 0;
+		}
+		catch (Exception ex)
+		{
+			_fileSize = 0;
+		}
 	}
 	
 	private boolean initWriter() {
@@ -115,14 +132,7 @@ public class FileManagerV2 implements IFileManager {
 	}
 
 	public int getTotalNumberOfRows(){
-		try{
-			long totalFileSize = (new File(getFullFileAddress())).length();
-			return (int)(totalFileSize/101);
-		}
-		catch (Exception ex)
-		{
-			return 0;
-		}
+		return (int)(_fileSize/Parameters.maxTuplesBytes);
 	}
 	
 	public FileManagerV2(String fileName) throws NullPointerException{
@@ -134,16 +144,12 @@ public class FileManagerV2 implements IFileManager {
 			URI absolutePath = getClass().getProtectionDomain().getCodeSource().getLocation().toURI();
 			_projectPath = absolutePath.getPath();
 			_projectPathEscaped = absolutePath.toString();
-			/*if(_projectPath.startsWith("/"))
-				_projectPath = _projectPath.substring(1);*/
-			//_projectPath = URLEncoder.encode(_projectPath, "UTF-8");
 		} catch (URISyntaxException e) {
 			_projectPath = "";
 			e.printStackTrace();
-		} /*catch (UnsupportedEncodingException e) {
-			_projectPath = "";
-			e.printStackTrace();
-		}*/
+		}
+		
+		getSize();
 	}
 
 	@Override
@@ -151,6 +157,8 @@ public class FileManagerV2 implements IFileManager {
 		if(fileName == null || fileName.isEmpty()) throw new NullPointerException("FileName is not specified");
 		_fileName = fileName;
 		terminateFile();
+
+		getSize();
 		initWriter();
 		initReader();
 	}
