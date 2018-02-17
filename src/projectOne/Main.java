@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import projectOne.bagDifference.BagDifference;
+import projectOne.common.Parameters;
 import projectOne.file.*;
 import projectOne.models.*;
 import projectOne.multiMergeSort.*;
 
 public class Main {
 
-	public static void main(String[] args) throws Exception {		
+	public static void main(String[] args) throws Exception {
 		System.out.print("TPMMS: Sorting... ");
 		long startTime = System.nanoTime();
 		int sublists[] = Sort.DoSort();
@@ -60,6 +61,13 @@ public class Main {
 		System.out.println("Time taken: " + totalTime + "s");
 		System.out.println("I/O operations: " + ioCountTotal);
 		System.out.println("COMPLETE");
+	}
+	
+	public static void TestMemoryParams(){
+		System.out.println("Environment Memory: " + (Parameters.getEnvironmentMemory()/1024)/1024 + "MBs");
+		System.out.println("Max Memory: " + (Parameters.getMaxMemory()/1024)/1024 + "MBs");
+		System.out.println("Available Memory: " + (Parameters.getAvailableMemory()/1024)/1024 + "MBs");
+		System.out.println("Maximum fitting Tuples in memory: " + Parameters.getMaxTuplesCount() + " Tuples");
 	}
 	
 	public static void TestFileManagerV2(){

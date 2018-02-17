@@ -9,4 +9,20 @@ public class Parameters {
 	public static int maxTuplesFitInMemory = 40000;
 	
 	public static int maxTuplesBytes = 101;
+	
+	public static long getAvailableMemory(){
+		return Runtime.getRuntime().freeMemory();
+	}
+	
+	public static long getMaxMemory(){
+		return Runtime.getRuntime().maxMemory();
+	}
+	
+	public static long getEnvironmentMemory(){
+		return Runtime.getRuntime().totalMemory();
+	}
+	
+	public static long getMaxTuplesCount(){
+		return (getAvailableMemory()/maxTuplesBytes);
+	}
 }
