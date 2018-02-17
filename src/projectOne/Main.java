@@ -13,6 +13,7 @@ import projectOne.multiMergeSort.*;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
+		/*
 		System.out.print("TPMMS: Sorting... ");
 		long startTime = System.nanoTime();
 		int sublists[] = Sort.DoSort();
@@ -61,13 +62,16 @@ public class Main {
 		System.out.println("Time taken: " + totalTime + "s");
 		System.out.println("I/O operations: " + ioCountTotal);
 		System.out.println("COMPLETE");
+		*/
+		TestMemoryParams();
 	}
 	
 	public static void TestMemoryParams(){
-		System.out.println("Environment Memory: " + (Parameters.getEnvironmentMemory()/1024)/1024 + "MBs");
-		System.out.println("Max Memory: " + (Parameters.getMaxMemory()/1024)/1024 + "MBs");
-		System.out.println("Available Memory: " + (Parameters.getAvailableMemory()/1024)/1024 + "MBs");
+		System.out.println("Total Memory: " + (Parameters.getTotalMemory()/1024) + "KBs");
+		System.out.println("Max Memory: " + (Parameters.getMaxMemory()/1024) + "KBs");
+		System.out.println("Available Memory: " + (Parameters.getAvailableMemory()/1024) + "KBs");
 		System.out.println("Maximum fitting Tuples in memory: " + Parameters.getMaxTuplesCount() + " Tuples");
+		System.out.println("Maximum fitting Blocks in memory: " + Parameters.getMaxBlocksCount() + " Blocks");
 	}
 	
 	public static void TestFileManagerV2(){

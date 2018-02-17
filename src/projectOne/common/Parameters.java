@@ -18,11 +18,15 @@ public class Parameters {
 		return Runtime.getRuntime().maxMemory();
 	}
 	
-	public static long getEnvironmentMemory(){
+	public static long getTotalMemory(){
 		return Runtime.getRuntime().totalMemory();
 	}
 	
 	public static long getMaxTuplesCount(){
 		return (getAvailableMemory()/maxTuplesBytes);
+	}
+	
+	public static long getMaxBlocksCount(){
+		return (getAvailableMemory()/(tuplesPerBlock * maxTuplesBytes));
 	}
 }
