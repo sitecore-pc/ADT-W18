@@ -13,7 +13,6 @@ import projectOne.multiMergeSort.*;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		/*
 		System.out.print("TPMMS: Sorting... ");
 		long startTime = System.nanoTime();
 		int sublists[] = Sort.DoSort();
@@ -62,8 +61,6 @@ public class Main {
 		System.out.println("Time taken: " + totalTime + "s");
 		System.out.println("I/O operations: " + ioCountTotal);
 		System.out.println("COMPLETE");
-		*/
-		TestMemoryParams();
 	}
 	
 	public static void TestMemoryParams(){
