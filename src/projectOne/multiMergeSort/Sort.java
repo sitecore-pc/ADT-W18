@@ -16,24 +16,18 @@ public class Sort {
 		int noOfSubFiles = 0;
 		try {
 			FileManagerV2 inputFile = new FileManagerV2(FileName);
-			double noOfLines = 40.0; // no of lines in subfiles
+			int noOfLines = Parameters.maxTuplesFitInMemory; // no of lines in subfiles
 			long totalNoOfRows = inputFile.getTotalNumberOfRows();
-			double temp = (totalNoOfRows / noOfLines);
-			int temp1 = (int) temp;
-			if (temp1 == temp) {
-				noOfSubFiles = temp1;
-			} else {
-				noOfSubFiles = temp1 + 1;
-			}
+			noOfSubFiles = (int) Math.ceil(totalNoOfRows / noOfLines);
 			String subFileName = "";
 			// splitting of file into smaller files
 			for (int j = 1; j <= noOfSubFiles; j++) {
 				// creation of file
-				subFileName = FileName.substring(0, FileName.lastIndexOf('.'))
+				subFileName = FileName.substring(FileName.lastIndexOf('/') + 1, FileName.lastIndexOf('.'))
 						+ "_" + j + ".txt";
 				FileManagerV2 subFile = new FileManagerV2(subFileName);
 				// read lines
-				String[] lines1 = inputFile.readNextLines(40);
+				String[] lines1 = inputFile.readNextLines(noOfLines);
 				// sort files
 				Arrays.sort(lines1);
 				// write

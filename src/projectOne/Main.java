@@ -1,6 +1,5 @@
 package projectOne;
 
-import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,22 +11,28 @@ import projectOne.multiMergeSort.*;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		System.out.println("INIT: Deleting old temporary files...");
-		ClearTempFiles();
+		//System.out.println("INIT: Deleting old temporary files...");
+		//ClearTempFiles();
 		
-		System.out.println("TPMMS: Sorting...");
+		System.out.println("TPMMS: Sorting... ");
 		long startTime = System.nanoTime();
 		int sublists[] = Sort.DoSort();
+		System.out.print(" Bag 1: " + sublists[0] + ", Bag 2: " + sublists[1] + " sublists created.\n");
 		
-		System.out.println("TPMMS: Merging...");
-		MultiMerge.doMerge("T1", sublists[0]);
-		MultiMerge.doMerge("T2", sublists[1]);
+		System.out.print("TPMMS: Merging... ");
+		String bag1 = MultiMerge.doMerge("bag1_", sublists[0]);
+		System.out.print("Bag 1 complete... ");
+		String bag2 = MultiMerge.doMerge("bag2_", sublists[1]);
+		System.out.println("Bag 2 complete.");
 
 		long endTpmmsTime = System.nanoTime();
 		long ioCountTPMMS = FileManagerV2.getCounter();
 		
 		System.out.println("BD: Bag Difference...");
 		// TODO: Bag Difference
+		// shasank, call your method here. Pass bag1 and bag2 variables to get the filesnames 
+		// you must take as input for sorted bag1 and bag2. For example:
+		// BagDifference(bag1, bag2);
 		
 		long endTime = System.nanoTime();
 		long ioCountTotal = FileManagerV2.getCounter();
@@ -35,6 +40,10 @@ public class Main {
 		// Final output
 		long tpmmsTime = (endTpmmsTime - startTime) / 10^6;
 		long totalTime = (endTime - startTime) / 10^6;
+		System.out.println("");
+		System.out.println("------------------");
+		System.out.println("PERFORMANCE REPORT");
+		System.out.println("");
 		System.out.println("Input");
 		System.out.println("-----");
 		System.out.println(" ");
@@ -163,7 +172,8 @@ public class Main {
 		}
 	}
 	
-	private static void ClearTempFiles() {
-		// TODO: Delete any existing text files (besides T1.txt and T2.txt) before starting
+	private static void ClearTempFiles() throws IOException {
+        Runtime runtime = java.lang.Runtime.getRuntime();
+		//runtime.exec("for f in *.txt; do rm \"$f\"; done");
 	}
 }

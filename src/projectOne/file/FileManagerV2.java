@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import projectOne.common.Parameters;
 
 public class FileManagerV2 implements IFileManager {
-	
 	private static String _projectPath = null;
 	private static String _projectPathEscaped = null;
 	public static String getProjectFolderPath(){
@@ -122,7 +121,7 @@ public class FileManagerV2 implements IFileManager {
 		        if(_fileWriter != null)
 		        	_fileWriter.close();
 		        if(_fileReader != null)
-		        	_fileReader.close();
+		        	_fileReader.close(); // TODO: Why is this never called?
 		    } catch (IOException e) {
 		    	e.printStackTrace();
 		    	success = false;
@@ -274,7 +273,7 @@ public class FileManagerV2 implements IFileManager {
     	return initWriter() && initReader();
 	}
 
-	protected void finalize(){
+	public void finalize(){
 		terminateFile();
 	}
 }
