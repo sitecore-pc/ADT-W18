@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import projectOne.bagDifference.BagDifference;
 import projectOne.file.*;
 import projectOne.models.*;
 import projectOne.multiMergeSort.*;
@@ -30,9 +31,13 @@ public class Main {
 		
 		System.out.println("BD: Bag Difference...");
 		// TODO: Bag Difference
-		// shasank, call your method here. Pass bag1 and bag2 variables to get the filesnames 
+		// shashank, call your method here. Pass bag1 and bag2 variables to get the filesnames 
 		// you must take as input for sorted bag1 and bag2. For example:
 		// BagDifference(bag1, bag2);
+		
+		//Calling Bag Difference
+		BagDifference.comparator(bag1,bag2);
+		System.out.println("Complete");
 		
 		long endTime = System.nanoTime();
 		long ioCountTotal = FileManagerV2.getCounter();
@@ -63,6 +68,7 @@ public class Main {
 		System.out.println(" ");
 		System.out.println("Time taken: " + totalTime + "ms");
 		System.out.println("I/O operations: " + ioCountTotal);
+		System.out.println("COMPLETE");
 	}
 	
 	public static void TestFileManagerV2(){
