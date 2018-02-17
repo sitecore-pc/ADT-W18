@@ -11,14 +11,11 @@ import projectOne.multiMergeSort.*;
 
 public class Main {
 
-	public static void main(String[] args) throws Exception {
-		//System.out.println("INIT: Deleting old temporary files...");
-		//ClearTempFiles();
-		
-		System.out.println("TPMMS: Sorting... ");
+	public static void main(String[] args) throws Exception {		
+		System.out.print("TPMMS: Sorting... ");
 		long startTime = System.nanoTime();
 		int sublists[] = Sort.DoSort();
-		System.out.print(" Bag 1: " + sublists[0] + ", Bag 2: " + sublists[1] + " sublists created.\n");
+		System.out.print(" Bag 1: " + sublists[0] + "sublists, Bag 2: " + sublists[1] + " sublists\n");
 		
 		System.out.print("TPMMS: Merging... ");
 		String bag1 = MultiMerge.doMerge("bag1_", sublists[0]);
@@ -29,13 +26,7 @@ public class Main {
 		long endTpmmsTime = System.nanoTime();
 		long ioCountTPMMS = FileManagerV2.getCounter();
 		
-		System.out.println("BD: Bag Difference...");
-		// TODO: Bag Difference
-		// shashank, call your method here. Pass bag1 and bag2 variables to get the filesnames 
-		// you must take as input for sorted bag1 and bag2. For example:
-		// BagDifference(bag1, bag2);
-		
-		//Calling Bag Difference
+		System.out.print("BD: Bag Difference... ");
 		BagDifference.comparator(bag1,bag2);
 		System.out.println("Complete");
 		
@@ -43,8 +34,8 @@ public class Main {
 		long ioCountTotal = FileManagerV2.getCounter();
 		
 		// Final output
-		long tpmmsTime = (endTpmmsTime - startTime) / 10^6;
-		long totalTime = (endTime - startTime) / 10^6;
+		double tpmmsTime = (endTpmmsTime - startTime) / 1000000000.0;
+		double totalTime = (endTime - startTime) / 1000000000.0;
 		System.out.println("");
 		System.out.println("------------------");
 		System.out.println("PERFORMANCE REPORT");
@@ -52,21 +43,21 @@ public class Main {
 		System.out.println("Input");
 		System.out.println("-----");
 		System.out.println(" ");
-		System.out.println("Total tuples: TBD");
-		System.out.println("Total blocks: TBD");
+		System.out.println("Total tuples: TBD"); // TODO
+		System.out.println("Total blocks: TBD"); // TODO
 		System.out.println(" ");
 		System.out.println(" ");
 		System.out.println("TPMMS");
 		System.out.println("-----");
 		System.out.println(" ");
-		System.out.println("Time taken: " + tpmmsTime + "ms");
+		System.out.println("Time taken: " + tpmmsTime + "s");
 		System.out.println("I/O operations: " + ioCountTPMMS);
 		System.out.println(" ");
 		System.out.println(" ");
 		System.out.println("Total");
 		System.out.println("-----");
 		System.out.println(" ");
-		System.out.println("Time taken: " + totalTime + "ms");
+		System.out.println("Time taken: " + totalTime + "s");
 		System.out.println("I/O operations: " + ioCountTotal);
 		System.out.println("COMPLETE");
 	}
@@ -176,10 +167,5 @@ public class Main {
 			Tuple student = studentsIterator.next();
 			System.out.println(student.toString());
 		}
-	}
-	
-	private static void ClearTempFiles() throws IOException {
-        Runtime runtime = java.lang.Runtime.getRuntime();
-		//runtime.exec("for f in *.txt; do rm \"$f\"; done");
 	}
 }

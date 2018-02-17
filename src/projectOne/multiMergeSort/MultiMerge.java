@@ -1,13 +1,11 @@
 package projectOne.multiMergeSort;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import projectOne.common.Parameters;
 import projectOne.file.FileManagerV2;
-import projectOne.models.Tuple;
 
 public class MultiMerge {
 
@@ -29,7 +27,7 @@ public class MultiMerge {
 				lastIndex = files.size() - 1;
 			
 			if (currentIndex == lastIndex)
-				break; // TODO: fix this boundary condition?			
+				break;		
 			
 			// merge the maximum possible. 
 			// the resulting file is saved and added to the end of the list
@@ -46,7 +44,7 @@ public class MultiMerge {
 	 * @throws Exception 
 	 */
 	private static String partialMerge(List<String> sublist) throws Exception {
-		Tuple[] entryCache = new Tuple[sublist.size()];
+		String[] entryCache = new String[sublist.size()];
 		FileManagerV2[] readControllers = new FileManagerV2[sublist.size()];
 		String targetFilename = "mergetemp_" + System.nanoTime() + ".txt";
 		FileManagerV2 target = new FileManagerV2(targetFilename);
@@ -55,12 +53,11 @@ public class MultiMerge {
 		int i = 0;
 		for (String file : sublist) {
 			readControllers[i] = new FileManagerV2(file);
-			entryCache[i] = new Tuple();
+			//entryCache[i] = new String();
 			
-			String firstTuple = readControllers[i].readNextLine();
-			if (firstTuple == null) throw new Exception("The sorted sub-list file " + file + " is empty.");
-						
-			entryCache[i].parse(firstTuple);
+			entryCache[i] = readControllers[i].readNextLine();
+			if (entryCache[i] == null) throw new Exception("The sorted sub-list file " + file + " is empty.");
+			
 			i++;
 		}
 
@@ -76,17 +73,8 @@ public class MultiMerge {
 			target.writeLine(entryCache[lowest].toString());
 			
 			// get the next line from the sublist we just took from
-			String nextLine = readControllers[lowest].readNextLine();
-			if (nextLine == null) 
-				entryCache[lowest] = null;
-			else
-				entryCache[lowest].parse(nextLine);	
+			entryCache[lowest] = readControllers[lowest].readNextLine();
 		}
-		
-		//for (FileManagerV2 f : readControllers) {
-		//	f.finalize();
-	//	}
-		//target.finalize();
 		
 		return targetFilename;
 	}
@@ -94,18 +82,20 @@ public class MultiMerge {
 	/***
 	 * Returns -1 when all records are null
 	 */
-	private static int getIndexOfLowest(Tuple[] array) {
-		int result = -1;
+	private static int getIndexOfLowest(String[] array) {
+		String first = "";
+		int index = -1;
+		
 		for (int i = 0; i < array.length; i++) {
 			if (array[i] != null) {
-				if (result == -1)
-					result = i;
-				else
-					if (array[i].getID() < array[result].getID())
-						result = i;
-			}
+				if (first.equals("") || first.compareTo(array[i]) > 0) {
+					first = array[i];
+					index = i;
+				}
+			}	
 		}
-		return result;
+		
+		return index;
 	}
 	
 }
