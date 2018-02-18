@@ -6,8 +6,6 @@ public class Parameters {
 	
 	public static int tuplesPerBlock = 40;
 	
-	public static int maxTuplesFitInMemory = 40000;
-	
 	public static int maxTuplesBytes = 101;
 	
 	public static long getAvailableMemory(){
