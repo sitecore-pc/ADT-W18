@@ -27,7 +27,7 @@ public class Main {
 		long endTpmmsTime = System.nanoTime();
 		long ioCountTPMMS = FileManagerV2.getCounter();
 		
-		System.out.print("BD: Bag Difference... ");
+		System.out.print("BD: Bag Difference... "+bag1+"..."+bag2);
 		BagDifference.comparator(bag1,bag2);
 		System.out.println("Complete");
 		
