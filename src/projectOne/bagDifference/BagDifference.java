@@ -5,6 +5,7 @@ import projectOne.file.FileManagerV2;
 
 public class BagDifference {
 	
+	private static long resultSize;
 	private static FileManagerV2 fmT1 = null;
 	private static FileManagerV2 fmT2 = null;
 	private static final FileManagerV2 fmResult = new FileManagerV2("Result.txt");
@@ -16,8 +17,9 @@ public class BagDifference {
 	private static boolean startOfProg = true;
 	
 	//called from main to read through the sorted bag1
-	public static String comparator(String bag1, String bag2) throws FileNotFoundException
+	public static long comparator(String bag1, String bag2) throws FileNotFoundException
 	{
+		resultSize = 0;
 		fmT1 = new FileManagerV2(bag1);//Initiate FileManager for T1
 		fmT2 = new FileManagerV2(bag2);//Initiate FileManager for T2
 		currentTupleT1 = fmT1.readNextLine();
@@ -49,7 +51,7 @@ public class BagDifference {
 		}
 //		File results = new File("Result.txt");
 //		long resultSize = results.length();
-		return "";
+		return resultSize;
 	}
 	
 	//called from comparator to read through sorted bag2
@@ -129,6 +131,7 @@ public class BagDifference {
 			k = m-n;
 		currentTupleT1=currentTupleT1+"--"+k;
 		fmResult.writeLine(currentTupleT1);
+		resultSize++;
 	}
 	
 	//utility function to equate two strings faster

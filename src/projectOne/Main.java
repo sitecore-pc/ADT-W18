@@ -3,7 +3,7 @@ package projectOne;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-
+import java.math.*;
 import projectOne.bagDifference.BagDifference;
 import projectOne.common.Parameters;
 import projectOne.file.*;
@@ -27,9 +27,8 @@ public class Main {
 		long endTpmmsTime = System.nanoTime();
 		long ioCountTPMMS = FileManagerV2.getCounter();
 		
-		System.out.print("BD: Bag Difference... "+bag1+"..."+bag2);
-		BagDifference.comparator(bag1,bag2);
-		System.out.println("Complete");
+		System.out.print("BD: Bag Difference... ");
+		long resultSize = BagDifference.comparator(bag1,bag2);
 		
 		long endTime = System.nanoTime();
 		long ioCountTotal = FileManagerV2.getCounter();
@@ -61,7 +60,10 @@ public class Main {
 		System.out.println(" ");
 		System.out.println("Time taken: " + totalTime + "s");
 		System.out.println("I/O operations: " + ioCountTotal);
-		System.out.println("COMPLETE");
+		System.out.println("Total no. of tuples in result:"+resultSize);
+		System.out.println("Total no. of blocks:"+Math.round(resultSize/4.0));
+		System.out.println("");
+		System.out.println("--COMPLETE--");
 	}
 	
 	public static void TestMemoryParams(){
