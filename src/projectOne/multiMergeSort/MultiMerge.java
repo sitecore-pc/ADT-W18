@@ -36,6 +36,7 @@ public class MultiMerge {
 			currentIndex = lastIndex + 1; 
 		}
 		
+		System.gc();
 		return files.get(files.size() - 1);
 	}
 	

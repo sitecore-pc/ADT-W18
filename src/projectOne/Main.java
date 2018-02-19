@@ -16,7 +16,7 @@ public class Main {
 		System.out.print("TPMMS: Sorting... ");
 		long startTime = System.nanoTime();
 		int sublists[] = Sort.DoSort();
-		System.out.print(" Bag 1: " + sublists[0] + "sublists, Bag 2: " + sublists[1] + " sublists\n");
+		System.out.print(" Bag 1: " + sublists[0] + " sublists, Bag 2: " + sublists[1] + " sublists\n");
 		
 		System.out.print("TPMMS: Merging... ");
 		String bag1 = MultiMerge.doMerge("bag1_", sublists[0]);
@@ -40,12 +40,13 @@ public class Main {
 		System.out.println("");
 		System.out.println("------------------");
 		System.out.println("PERFORMANCE REPORT");
+		System.out.println("------------------");
 		System.out.println("");
 		System.out.println("Input");
 		System.out.println("-----");
 		System.out.println(" ");
-		System.out.println("Total tuples: TBD"); // TODO
-		System.out.println("Total blocks: TBD"); // TODO
+		System.out.println("Total tuples: " + Sort.getTuples());
+		System.out.println("Total blocks: " + Math.ceil(Sort.getTuples() / Parameters.tuplesPerBlock));
 		System.out.println(" ");
 		System.out.println(" ");
 		System.out.println("TPMMS");

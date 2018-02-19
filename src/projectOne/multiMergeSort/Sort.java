@@ -5,10 +5,17 @@ import projectOne.common.Parameters;
 import projectOne.file.FileManagerV2;
 
 public class Sort {
+	private static long _tuples = 0;
+	public static long getTuples() {
+		return _tuples;
+	}
+	
 	public static int[] DoSort() {
 		int[] sublists = new int[2];
 		sublists[0] = Sort.ReadSortFile(Parameters.dataFiles[0]);
+		System.gc();
 		sublists[1] = Sort.ReadSortFile(Parameters.dataFiles[1]);
+		System.gc();
 		return sublists;
 	}
 
@@ -16,9 +23,10 @@ public class Sort {
 		int noOfSubFiles = 0;
 		try {
 			FileManagerV2 inputFile = new FileManagerV2(FileName);
-			int noOfLines =  (int) Math.floor(Parameters.getMaxTuplesCount() * 0.9); // no of lines in subfiles
+			int noOfLines =  (int) Parameters.getMaxTuplesCount() / 3; // no of lines in subfiles
 			long totalNoOfRows = inputFile.getTotalNumberOfRows();
-			noOfSubFiles = (int) Math.ceil(totalNoOfRows / noOfLines);
+			_tuples = _tuples + totalNoOfRows;
+			noOfSubFiles = (int) Math.ceil(totalNoOfRows / noOfLines);			
 			String subFileName = "";
 			// splitting of file into smaller files
 			for (int j = 1; j <= noOfSubFiles; j++) {
