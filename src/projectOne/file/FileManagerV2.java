@@ -131,7 +131,7 @@ public class FileManagerV2 implements IFileManager {
 	}
 
 	public int getTotalNumberOfRows(){
-		return (int)(_fileSize/Parameters.maxTuplesBytes);
+		return (int)Math.ceil((double)_fileSize/(double)Parameters.maxTuplesBytes);
 	}
 	
 	public FileManagerV2(String fileName) throws NullPointerException{

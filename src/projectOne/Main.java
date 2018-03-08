@@ -60,8 +60,6 @@ public class Main {
 		System.out.println(" ");
 		System.out.println("Time taken: " + totalTime + "s");
 		System.out.println("I/O operations: " + ioCountTotal);
-		System.out.println("Total no. of tuples in result:"+resultSize);
-		System.out.println("Total no. of blocks:"+Math.round(resultSize/4.0));
 		System.out.println("");
 		System.out.println("--COMPLETE--");
 	}

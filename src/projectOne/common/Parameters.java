@@ -21,10 +21,10 @@ public class Parameters {
 	}
 	
 	public static long getMaxTuplesCount(){
-		return (getAvailableMemory()/maxTuplesBytes);
+		return (long)Math.floor((double)getAvailableMemory()/(double)maxTuplesBytes);
 	}
 	
 	public static long getMaxBlocksCount(){
-		return (getAvailableMemory()/(tuplesPerBlock * maxTuplesBytes));
+		return (long)Math.ceil((double)getAvailableMemory()/(double)(tuplesPerBlock * maxTuplesBytes));
 	}
 }
