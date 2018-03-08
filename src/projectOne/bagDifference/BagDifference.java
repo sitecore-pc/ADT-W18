@@ -13,8 +13,8 @@ public class BagDifference {
 	private static String currentTupleT1 = new String();
 	private static String nextTupleT1 = new String();
 	private static String currentTupleT2 = new String();
-	private static int m = 0, n = 0, k = 0, mPrevious = 0, nPrevious = 0;
-	private static boolean startOfProg = true;
+	private static int m = 0, n = 0, k = 0, mPrevious = 0, nPrevious = 0, kPrevious = 0;
+	private static boolean startOfProg = true, startOfProgForkCalc = false;
 	
 	//called from main to read through the sorted bag1
 	public static long comparator(String bag1, String bag2) throws FileNotFoundException
@@ -65,6 +65,7 @@ public class BagDifference {
 		if(startOfProg)	{//to initiate the reading of file T2
 			currentTupleT2 = fmT2.readNextLine();//assigns the first tuple in T2 to currentTupleT2
 			startOfProg = false;
+			startOfProgForkCalc = true;
 		}
 		n = 0;
 		if(null!=currentTupleT2) {
@@ -126,9 +127,34 @@ public class BagDifference {
 	private static void writeData() throws FileNotFoundException
 	{
 		if(m<n)
+		{
 			k = 0;
+			kPrevious = k;
+		}
+			
 		else
-			k = m-n;
+		{
+			if(startOfProgForkCalc)
+			{
+				startOfProgForkCalc = false;
+				k = m-n;
+				kPrevious = k;
+			}
+			
+			else
+			{
+				if(kPrevious!=0)
+				{k = m-n-1;
+				kPrevious = k;
+				}
+				else
+				{
+					k=m-n;
+					kPrevious = k;
+				}
+					
+			}
+		}
 		currentTupleT1=currentTupleT1+"--"+k;
 		fmResult.writeLine(currentTupleT1);
 		resultSize++;
