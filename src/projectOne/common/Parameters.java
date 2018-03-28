@@ -6,7 +6,8 @@ public class Parameters {
 	
 	public static int tuplesPerBlock = 40;
 	
-	public static int maxTuplesBytes = 101;
+	public static int maxTupleBytesT1 = 101;
+	public static int maxTupleBytesT2 = 28;
 	
 	public static long getAvailableMemory(){
 		return Runtime.getRuntime().freeMemory();
@@ -20,11 +21,19 @@ public class Parameters {
 		return Runtime.getRuntime().totalMemory();
 	}
 	
-	public static long getMaxTuplesCount(){
-		return (long)Math.floor((double)getAvailableMemory()/(double)maxTuplesBytes);
+	public static long getMaxTuplesCountT1(){
+		return (long)Math.floor((double)getAvailableMemory()/(double)maxTupleBytesT1);
 	}
 	
-	public static long getMaxBlocksCount(){
-		return (long)Math.ceil((double)getAvailableMemory()/(double)(tuplesPerBlock * maxTuplesBytes));
+	public static long getMaxTuplesCountT2(){
+		return (long)Math.floor((double)getAvailableMemory()/(double)maxTupleBytesT2);
+	}
+	
+	public static long getMaxBlocksCountT1(){
+		return (long)Math.ceil((double)getAvailableMemory()/(double)(tuplesPerBlock * maxTupleBytesT1));
+	}
+	
+	public static long getMaxBlocksCountT2(){
+		return (long)Math.ceil((double)getAvailableMemory()/(double)(tuplesPerBlock * maxTupleBytesT2));
 	}
 }
