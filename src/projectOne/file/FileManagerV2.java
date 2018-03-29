@@ -5,8 +5,6 @@ import java.net.*;
 import java.nio.file.*;
 import java.util.ArrayList;
 
-import projectOne.common.Parameters;
-
 public class FileManagerV2 implements IFileManager {
 	private static String _projectPath = null;
 	private static String _projectPathEscaped = null;
@@ -130,8 +128,8 @@ public class FileManagerV2 implements IFileManager {
 		return success;
 	}
 
-	public int getTotalNumberOfRows(){
-		return (int)Math.ceil((double)_fileSize/(double)Parameters.maxTuplesBytes);
+	public int getTotalNumberOfRows(int tupleBytes){
+		return (int)Math.ceil((double)_fileSize/(double)tupleBytes);
 	}
 	
 	public FileManagerV2(String fileName) throws NullPointerException{

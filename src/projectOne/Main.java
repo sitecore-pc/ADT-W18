@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import projectOne.bagDifference.BagDifference;
 import projectOne.common.Parameters;
 import projectOne.file.*;
-import projectOne.models.*;
+import projectOne.models.Tuple;
 import projectOne.multiMergeSort.*;
 
 public class Main {
@@ -65,8 +65,8 @@ public class Main {
 		System.out.println("Total Memory: " + (Parameters.getTotalMemory()/1024) + "KBs");
 		System.out.println("Max Memory: " + (Parameters.getMaxMemory()/1024) + "KBs");
 		System.out.println("Available Memory: " + (Parameters.getAvailableMemory()/1024) + "KBs");
-		System.out.println("Maximum fitting Tuples in memory: " + Parameters.getMaxTuplesCount() + " Tuples");
-		System.out.println("Maximum fitting Blocks in memory: " + Parameters.getMaxBlocksCount() + " Blocks");
+		System.out.println("Maximum fitting Tuples in memory: " + Parameters.getMaxTuplesCountT1() + " Tuples");
+		System.out.println("Maximum fitting Blocks in memory: " + Parameters.getMaxBlocksCountT1() + " Blocks");
 	}
 	
 	public static void TestFileManagerV2(){
@@ -117,6 +117,6 @@ public class Main {
 			System.out.println(lines[i]);
 		
 		f3.deleteFile();
-		System.out.println("Number of lines in F2.txt: " + f2.getTotalNumberOfRows());
+		System.out.println("Number of lines in F2.txt: " + f2.getTotalNumberOfRows(Parameters.maxTupleBytesT1));
 	}
 }

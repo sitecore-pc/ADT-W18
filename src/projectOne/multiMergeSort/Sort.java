@@ -23,8 +23,8 @@ public class Sort {
 		int noOfSubFiles = 0;
 		try {
 			FileManagerV2 inputFile = new FileManagerV2(FileName);
-			int noOfLines =  (int)Math.floor((double)Parameters.getMaxTuplesCount() / 3.0); // no of lines in subfiles
-			long totalNoOfRows = inputFile.getTotalNumberOfRows();
+			int noOfLines =  (int)Math.floor((double)Parameters.getMaxTuplesCountT1() / 3.0); // no of lines in subfiles
+			long totalNoOfRows = inputFile.getTotalNumberOfRows(Parameters.maxTupleBytesT1);
 			_tuples = _tuples + totalNoOfRows;
 			noOfSubFiles = (int) Math.ceil((double)totalNoOfRows / (double)noOfLines);			
 			String subFileName = "";

@@ -14,7 +14,7 @@ public class MultiMerge {
 		int currentIndex = 0;
 		
 		// calculate number of files to merge at one time
-		int maxFiles = (int) Math.floor((double)Parameters.getMaxTuplesCount() * 0.9);
+		int maxFiles = (int) Math.floor((double)Parameters.getMaxTuplesCountT1() * 0.9);
 		
 		// make a list of all the files to merge
 		for (int i = 1; i <= numFiles; i++)
