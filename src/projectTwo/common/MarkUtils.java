@@ -1,6 +1,6 @@
-package projectOne.common;
+package projectTwo.common;
 
-public class MarkUils {
+public class MarkUtils {
 	public static String ToLetterMark(double mark)
     {
         if (mark >= 4.3) return "A+";
@@ -17,7 +17,7 @@ public class MarkUils {
 	
 	public static double ToFloatMark(String letter)
     {
-        switch (letter.toUpperCase())
+        switch (letter.trim().toUpperCase())
         {
             case "A+":
                 return 4.3;
@@ -37,4 +37,13 @@ public class MarkUils {
                 return 0;
         }
     }
+	
+	public static double ExtractGradeFromTuple(String t) {
+		return ToFloatMark(t.substring(21,22));	
+	}
+	
+	public static int ExtractCreditsFromTuple(String t) {
+		return Integer.parseInt(t.substring(23,26));		
+	}
+	
 }

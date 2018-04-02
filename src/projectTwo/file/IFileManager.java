@@ -1,4 +1,4 @@
-package projectOne.file;
+package projectTwo.file;
 
 public interface IFileManager {
 	//Returns the total file rows' count

@@ -1,8 +1,9 @@
-package projectOne.multiMergeSort;
+package projectTwo.multiMergeSort;
 
 import java.util.Arrays;
-import projectOne.common.Parameters;
-import projectOne.file.FileManagerV2;
+
+import projectTwo.common.Parameters;
+import projectTwo.file.FileManagerV2;
 
 public class Sort {
 	private static long _tuples = 0;

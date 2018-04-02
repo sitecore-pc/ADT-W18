@@ -1,4 +1,4 @@
-package projectOne.common;
+package projectTwo.common;
 
 //This class has been extracted from: http://www.rgagnon.com/javadetails/java-0448.html
 public class StringUtils {

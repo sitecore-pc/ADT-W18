@@ -1,4 +1,4 @@
-package projectOne.models;
+package projectTwo.models;
 
 public interface IConvertable {
 	

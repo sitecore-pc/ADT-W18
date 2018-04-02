@@ -1,11 +1,11 @@
-package projectOne.multiMergeSort;
+package projectTwo.multiMergeSort;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import projectOne.common.Parameters;
-import projectOne.file.FileManagerV2;
+import projectTwo.common.Parameters;
+import projectTwo.file.FileManagerV2;
 
 public class MultiMerge {
 

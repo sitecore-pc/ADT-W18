@@ -1,4 +1,4 @@
-package projectOne.common;
+package projectTwo.common;
 
 public class Parameters {
 	

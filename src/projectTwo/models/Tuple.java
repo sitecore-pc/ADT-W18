@@ -1,6 +1,6 @@
-package projectOne.models;
+package projectTwo.models;
 
-import projectOne.common.StringUtils;
+import projectTwo.common.StringUtils;
 
 //Student Tuple
 public class Tuple extends Object implements IConvertable{

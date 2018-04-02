@@ -1,8 +1,11 @@
-package projectOne.bagDifference;
+package projectTwo.bagDifference;
 
 import java.io.FileNotFoundException;
-import projectOne.file.FileManagerV2;
 
+import projectTwo.file.FileManagerV2;
+/***
+ * @deprecated
+ */
 public class BagDifference {
 	
 	private static long resultSize;
