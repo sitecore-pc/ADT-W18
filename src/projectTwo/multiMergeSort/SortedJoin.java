@@ -3,8 +3,7 @@ package projectTwo.multiMergeSort;
 import projectTwo.file.FileManagerV2;
 import projectTwo.common.MarkUtils;
 
-public class joinSorted {
-
+public class SortedJoin {
 	public static void DoJoin(String filenameT1, String filenameT2, String outputFilename) {
 		FileManagerV2 T1 = new FileManagerV2(filenameT1);
 		FileManagerV2 T2 = new FileManagerV2(filenameT2);
@@ -22,7 +21,7 @@ public class joinSorted {
 			
 			if (idT1 < idT2) {
 				if (currentCredits > 0) {
-					SaveGpaRecord(idT1, currentCredits, currentPoints, output);
+					GPAFile.SaveGpaRecord(idT1, currentCredits, currentPoints, output);
 					currentCredits = 0;
 					currentPoints = 0;
 				}
@@ -38,7 +37,7 @@ public class joinSorted {
 				
 				float thisCredits = MarkUtils.ExtractCreditsFromTuple(nextT2);
 				currentCredits += thisCredits;
-				currentPoints += MarkUtils.ExtractGradeFromTuple(nextT2) * MarkUtils.ExtractCreditsFromTuple(nextT2);
+				currentPoints += MarkUtils.ExtractGradeFromTuple(nextT2) * thisCredits;
 				
 				nextT2 = T2.readNextLine();
 			}
@@ -47,12 +46,5 @@ public class joinSorted {
 		T1.finalize();
 		T2.finalize();
 		output.finalize();
-	}	
-	
-	private static void SaveGpaRecord(int ID, int credits, float points, FileManagerV2 fileHandler) {
-		String GPA = Float.toString(points / (float) credits);
-		GPA = GPA + "   "; // lazy validation
-		GPA = GPA.substring(0, 3);
-		fileHandler.writeLine(Integer.toString(ID) + GPA);
 	}
 }
