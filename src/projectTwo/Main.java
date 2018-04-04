@@ -2,7 +2,6 @@ package projectTwo;
 
 import java.util.ArrayList;
 
-import projectTwo.bagDifference.BagDifference;
 import projectTwo.common.Parameters;
 import projectTwo.file.*;
 import projectTwo.models.Tuple;

@@ -1,13 +1,15 @@
 package projectTwo.multiMergeSort;
 
 import projectTwo.file.FileManagerV2;
+import projectTwo.file.IFileManager;
 import projectTwo.common.MarkUtils;
 
 public class SortedJoin {
-	public static void DoJoin(String filenameT1, String filenameT2, String outputFilename) {
-		FileManagerV2 T1 = new FileManagerV2(filenameT1);
-		FileManagerV2 T2 = new FileManagerV2(filenameT2);
-		FileManagerV2 output = new FileManagerV2(outputFilename);
+	public static void DoJoin(String filenameT1, String filenameT2, String outputFilename, String gpaFilename) {
+		IFileManager T1 = new FileManagerV2(filenameT1);
+		IFileManager T2 = new FileManagerV2(filenameT2);
+		IFileManager output = new FileManagerV2(outputFilename);
+		IFileManager gpa = new FileManagerV2(gpaFilename);
 		
 		String nextT1 = T1.readNextLine();
 		String nextT2 = T2.readNextLine();
@@ -21,7 +23,7 @@ public class SortedJoin {
 			
 			if (idT1 < idT2) {
 				if (currentCredits > 0) {
-					GPAFile.SaveGpaRecord(idT1, currentCredits, currentPoints, output);
+					GPAFile.SaveGpaRecord(idT1, currentCredits, currentPoints, gpa);
 					currentCredits = 0;
 					currentPoints = 0;
 				}

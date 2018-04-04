@@ -25,4 +25,7 @@ public interface IFileManager {
 	
 	//Deletes the file and creates a new file with the same name
 	boolean cleanFile();
+	
+	// Closes and terminates the file streams
+	void finalize();
 }
