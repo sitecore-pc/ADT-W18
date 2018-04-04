@@ -11,6 +11,8 @@ import projectTwo.multiMergeSort.*;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
+		TestNestedJoin();
+		/*
 		System.out.print("TPMMS: Sorting... ");
 		long startTime = System.nanoTime();
 		int sublists[] = Sort.DoSort();
@@ -26,7 +28,8 @@ public class Main {
 		long ioCountTPMMS = FileManagerV2.getCounter();
 		
 		System.out.print("BD: Bag Difference... ");
-		/*long resultSize = */BagDifference.comparator(bag1,bag2);
+		//long resultSize = 
+		BagDifference.comparator(bag1,bag2);
 		
 		long endTime = System.nanoTime();
 		long ioCountTotal = FileManagerV2.getCounter();
@@ -60,6 +63,14 @@ public class Main {
 		System.out.println("I/O operations: " + ioCountTotal);
 		System.out.println("");
 		System.out.println("--COMPLETE--");
+		*/
+	}
+	
+	public static void TestNestedJoin(){
+		String fileName1 = Parameters.dataFiles[0];
+		String fileName2 = Parameters.dataFiles[1];
+		
+		NestedJoin.DoJoin(fileName1, fileName2, "resources/NestedJoinBag.txt", "resources/NestedJoinGPABag.txt");
 	}
 	
 	public static void TestMemoryParams(){

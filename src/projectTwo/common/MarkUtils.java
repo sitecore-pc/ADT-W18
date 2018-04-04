@@ -38,12 +38,22 @@ public class MarkUtils {
         }
     }
 	
-	public static double ExtractGradeFromTuple(String t) {
-		return ToFloatMark(t.substring(21,22));	
+	public static double ExtractGradeFromTuple(String tuple) {
+		if(tuple == null || tuple.isEmpty() || tuple.length() < 27) 
+			return 0;
+		
+		String grade = tuple.substring(23,27);
+		grade = grade.trim();
+		return ToFloatMark(grade);
 	}
 	
-	public static int ExtractCreditsFromTuple(String t) {
-		return Integer.parseInt(t.substring(23,26));		
+	public static int ExtractCreditsFromTuple(String tuple) {
+		if(tuple == null || tuple.isEmpty() || tuple.length() < 27) 
+			return 0;
+		
+		String credit = tuple.substring(21,23);
+		credit = credit.trim();
+		return Integer.parseInt(credit);
 	}
 	
 }

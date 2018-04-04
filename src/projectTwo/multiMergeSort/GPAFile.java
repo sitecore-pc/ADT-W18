@@ -1,10 +1,10 @@
 package projectTwo.multiMergeSort;
 
-import projectTwo.common.StringUtils;
-import projectTwo.file.FileManagerV2;
+import projectTwo.common.*;
+import projectTwo.file.*;
 
 public class GPAFile {
-	public static void SaveGpaRecord(int ID, int credits, float points, FileManagerV2 fileHandler) {
+	public static void SaveGpaRecord(int ID, int credits, float points, IFileManager fileHandler) {
 		String GPA = Float.toString(points / (float) credits);
 		//GPA = GPA + "   "; // lazy validation
 		//GPA = GPA.substring(0, 3);
