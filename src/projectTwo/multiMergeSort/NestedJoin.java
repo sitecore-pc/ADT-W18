@@ -44,7 +44,7 @@ public class NestedJoin {
 			}
 			
 			//T2.setFile(filenameT2);//TODO: why does it clean?
-			T2 = new FileManagerV2(filenameT2);
+			T2 = new FileManagerV2(filenameT2);//TODO: Its not good. We have to dispose the previous one. (Memory Waste)
 			
 			nextT1 = T1.readNextLine();
 		}

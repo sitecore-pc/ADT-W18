@@ -10,7 +10,7 @@ public class MarkUtils {
         if (mark >= 3.0) return "B";
         if (mark >= 2.7) return "B-";
         if (mark >= 2) return "C";
-        if (mark < 2) return "F";
+        if (mark < 2) return "Fail";
 
         return "Unknown Mark";
     }
