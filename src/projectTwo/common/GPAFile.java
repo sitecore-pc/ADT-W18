@@ -1,4 +1,4 @@
-package projectTwo.multiMergeSort;
+package projectTwo.common;
 
 import projectTwo.common.*;
 import projectTwo.file.*;

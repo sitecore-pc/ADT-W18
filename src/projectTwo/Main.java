@@ -6,6 +6,7 @@ import projectTwo.common.Parameters;
 import projectTwo.file.*;
 import projectTwo.models.Tuple;
 import projectTwo.multiMergeSort.*;
+import projectTwo.nestedJoin.NestedJoin;
 
 public class Main {
 
