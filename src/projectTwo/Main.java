@@ -1,6 +1,6 @@
 package projectTwo;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 
 import projectTwo.common.Parameters;
@@ -30,7 +30,7 @@ public class Main {
 		FileManagerV3.resetCounter();		
 		
 		/*
-		 * DO SORTED JOIN
+		 * DO SORT
 		 */
 		System.out.print("TPMMS: Sorting... ");
 		startTime = System.nanoTime();
@@ -69,7 +69,7 @@ public class Main {
 		System.out.println("---------------");
 		System.out.println("Time taken: " + nestedJoinTime + "s");
 		System.out.println("I/O operations: " + ioCountNested);
-		System.out.println("Tuples in final output: " + 0.0);
+		System.out.println("Tuples in final output: " + numNestedTuples);
 		System.out.println("File size final output: " + nestedFileSize + "bytes");
 		System.out.println("");
 		System.out.println("  SORTED JOIN");
@@ -95,6 +95,23 @@ public class Main {
 		System.out.println("Available Memory: " + (Parameters.getAvailableMemory()/1024) + "KBs");
 		System.out.println("Maximum fitting Tuples in memory: " + Parameters.getMaxTuplesCountT1() + " Tuples");
 		System.out.println("Maximum fitting Blocks in memory: " + Parameters.getMaxBlocksCountT1() + " Blocks");
+	}
+	
+	public static void TestByteFileReader() {
+		try (
+	            InputStream inputStream = new FileInputStream(FileManagerV3.getProjectFolderPath() + "resources/bag1.txt");
+	            OutputStream outputStream = new FileOutputStream(FileManagerV3.getProjectFolderPath() + "resources/destination.txt");
+	        ) {
+	 
+            byte[] buffer = new byte[101];
+ 
+            if (inputStream.read(buffer) != -1) {
+                outputStream.write(buffer);
+            }
+            System.out.println("Done!");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 	}
 	
 	public static void TestFileManagerV3(){
@@ -135,12 +152,19 @@ public class Main {
 		
 		f2.writeLines(
 				new String[]{
-				students.get(0).toString(), 
-				students.get(1).toString(), 
+				students.get(0).toString(),
+				students.get(1).toString(),
 				students.get(2).toString(),
 				students.get(3).toString()
 				});//Simply an array of lines
 		String[] lines = f2.readNextLines(10);
+		for(int i = 0; i < lines.length; i++)
+			System.out.println(lines[i]);
+		
+		f2.finalize();
+		f2.setFile("F2.txt");
+		//f2 = new FileManagerV3("F2.txt");
+		lines = f2.readNextLines(10);
 		for(int i = 0; i < lines.length; i++)
 			System.out.println(lines[i]);
 		

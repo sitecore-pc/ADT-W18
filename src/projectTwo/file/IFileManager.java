@@ -1,6 +1,12 @@
 package projectTwo.file;
 
 public interface IFileManager {
+	//Returns the full physical file address
+	String getFullFileAddress();
+	
+	//Returns the full (escaped) physical file address
+	String getFullEscapedFileAddress();
+	
 	//Returns the total file rows' count
 	int getTotalNumberOfRows(int tupleBytes);
 	

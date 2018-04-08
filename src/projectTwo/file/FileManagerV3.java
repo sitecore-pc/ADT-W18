@@ -82,7 +82,7 @@ public class FileManagerV3 implements IFileManager {
 		String fileAddress = getFullFileAddress();
 		if(fileAddress == null || fileAddress.isEmpty()) return false;
 		try {
-			_fileWriter = new FileWriter(fileAddress, false);
+			_fileWriter = new FileWriter(fileAddress, true);
 		    _bufferedWriter = new BufferedWriter(_fileWriter);
 		    _printWriter = new PrintWriter(_bufferedWriter);
 		    return true;
@@ -104,40 +104,53 @@ public class FileManagerV3 implements IFileManager {
 			return false;
 		}
 	}
-	
+
 	private boolean terminateFile() {
-		if(_printWriter == null) return true;
-		boolean success = false; 
-		try{
-			_printWriter.close();
-			success = true;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			success = false;
-		}
-		finally {
-			if(_printWriter != null)
+		boolean success = true;
+		if(_printWriter != null){
+			try{
 				_printWriter.close();
-		    
-		    try {
-		        if(_bufferedWriter != null)
-		        	_bufferedWriter.close();
-		        if(_bufferedReader != null)
-		        	_bufferedReader.close();
-		    } catch (IOException e) {
-		    	e.printStackTrace();
-		    	success = false;
-		    }
-		    try {
-		        if(_fileWriter != null)
-		        	_fileWriter.close();
-		        if(_fileReader != null)
-		        	_fileReader.close(); 
-		    } catch (IOException e) {
-		    	e.printStackTrace();
-		    	success = false;
-		    }
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				success = false;
+			}
+			finally {
+			    try {
+			        if(_bufferedWriter != null)
+			        	_bufferedWriter.close();
+			    } catch (IOException e) {
+			    	e.printStackTrace();
+			    	success = false;
+			    }
+			    try {
+			        if(_fileWriter != null)
+			        	_fileWriter.close();
+			    } catch (IOException e) {
+			    	e.printStackTrace();
+			    	success = false;
+			    }
+			}
+		}
+
+		if(_bufferedReader != null)
+		{
+			try{
+				_bufferedReader.close();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				success = false;
+			}
+			finally {
+			    try {
+			    	if(_fileReader != null)
+			        	_fileReader.close();
+			    } catch (IOException e) {
+			    	e.printStackTrace();
+			    	success = false;
+			    }
+			}
 		}
 		return success;
 	}
@@ -290,9 +303,9 @@ public class FileManagerV3 implements IFileManager {
 	}
 	
 	
-	
+	//Call this only for limited times. Frequent call will affect performance 
 	public static long getFileSize(String filename) {
-		FileManagerV3 file = new FileManagerV3(filename);
+		FileManagerV3 file = new FileManagerV3(filename);//Bad practice
 		file.getSize();
 		return file._fileSize;
 	}
