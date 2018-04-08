@@ -9,10 +9,13 @@ public class MarkUtils {
         if (mark >= 3.3) return "B+";
         if (mark >= 3.0) return "B";
         if (mark >= 2.7) return "B-";
+        if (mark >= 2.3) return "C+";
         if (mark >= 2) return "C";
-        if (mark < 2) return "Fail";
-
-        return "Unknown Mark";
+        if (mark >= 1.7) return "C-";
+        if (mark >= 1.3) return "D+";
+        if (mark >= 1) return "D";
+        if (mark >= 0.7) return "D-";
+        return "Fail";
     }
 	
 	public static double ToFloatMark(String letter)
