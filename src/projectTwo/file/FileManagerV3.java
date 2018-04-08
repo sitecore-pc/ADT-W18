@@ -20,7 +20,7 @@ public class FileManagerV3 implements IFileManager {
 	private static String _projectPath = null;
 	private static String _projectPathEscaped = null;
 	public static String getProjectFolderPath(){
-		if(_projectPath == null) new FileManagerV2("dummy");//Bad practice!
+		if(_projectPath == null) new FileManagerV3("dummy");//Bad practice!
 		return _projectPath;
 	}
 	
@@ -58,6 +58,9 @@ public class FileManagerV3 implements IFileManager {
 	}
 	private static void incrementCounter() {
 		_counter++;
+	}
+	public static void resetCounter() {
+		_counter = 0;
 	}
 	
 	private long _fileSize;
@@ -130,7 +133,7 @@ public class FileManagerV3 implements IFileManager {
 		        if(_fileWriter != null)
 		        	_fileWriter.close();
 		        if(_fileReader != null)
-		        	_fileReader.close(); // TODO: Why is this never called?
+		        	_fileReader.close(); 
 		    } catch (IOException e) {
 		    	e.printStackTrace();
 		    	success = false;
@@ -284,5 +287,13 @@ public class FileManagerV3 implements IFileManager {
 
 	public void finalize(){
 		terminateFile();
+	}
+	
+	
+	
+	public static long getFileSize(String filename) {
+		FileManagerV3 file = new FileManagerV3(filename);
+		file.getSize();
+		return file._fileSize;
 	}
 }

@@ -3,7 +3,7 @@ package projectTwo.common;
 public class MarkUtils {
 	public static String ToLetterMark(double mark)
     {
-        if (mark >= 4.3) return "A+";
+		if (mark >= 4.3) return "A+";
         if (mark >= 4) return "A";
         if (mark >= 3.7) return "A-";
         if (mark >= 3.3) return "B+";
@@ -17,7 +17,9 @@ public class MarkUtils {
 	
 	public static double ToFloatMark(String letter)
     {
-        switch (letter.trim().toUpperCase())
+		// reference document provided by professor for marking scheme (DOES include C-, C+, D-, D and D+)
+		// https://moodle.concordia.ca/moodle/pluginfile.php/3128958/mod_resource/content/1/GPA%20calculation.pdf
+		switch (letter.trim().toUpperCase())
         {
             case "A+":
                 return 4.3;
@@ -31,8 +33,18 @@ public class MarkUtils {
                 return 3.0;
             case "B-":
                 return 2.7;
+            case "C+":
+            	return 2.3;
             case "C":
                 return 2;
+            case "C-":
+            	return 1.7;
+            case "D+":
+            	return 1.3;
+            case "D":
+            	return 1.0;
+            case "D-":
+            	return 0.7;
             default:
                 return 0;
         }

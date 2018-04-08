@@ -1,5 +1,6 @@
 package projectTwo;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import projectTwo.common.Parameters;
@@ -7,63 +8,78 @@ import projectTwo.file.*;
 import projectTwo.models.Tuple;
 import projectTwo.multiMergeSort.*;
 import projectTwo.nestedJoin.NestedJoin;
+import projectTwo.sortedJoin.SortedJoin;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		TestNestedJoin();
 		/*
-		System.out.print("TPMMS: Sorting... ");
+		 * DO NESTED JOIN
+		 */		
+		System.out.print("NestedJoin: Joining... ");
 		long startTime = System.nanoTime();
+		long numNestedTuples =
+				NestedJoin.DoJoin(Parameters.dataFiles[0],
+				Parameters.dataFiles[1],
+				"Output-NestedJoin.txt",
+				"Output-GPA-NestedJoin.txt");
+		System.out.print("done.\n"); 
+		double nestedJoinTime = (System.nanoTime() - startTime) / 1000000000.0 ;
+		long ioCountNested = FileManagerV3.getCounter();
+		long nestedFileSize =  FileManagerV3.getFileSize("Output-NestedJoin.txt");
+		FileManagerV3.resetCounter();		
+		
+		/*
+		 * DO SORTED JOIN
+		 */
+		System.out.print("TPMMS: Sorting... ");
+		startTime = System.nanoTime();
 		int sublists[] = Sort.DoSort();
 		System.out.print(" Bag 1: " + sublists[0] + " sublists, Bag 2: " + sublists[1] + " sublists\n");
 		
 		System.out.print("TPMMS: Merging... ");
-		String bag1 = MultiMerge.doMerge("bag1_", sublists[0]);
+		String bag1 = MultiMerge.doMerge("T1_", sublists[0]);
 		System.out.print("Bag 1 complete... ");
-		String bag2 = MultiMerge.doMerge("bag2_", sublists[1]);
-		System.out.println("Bag 2 complete.");
-
-		long endTpmmsTime = System.nanoTime();
-		long ioCountTPMMS = FileManagerV2.getCounter();
+		String bag2 = MultiMerge.doMerge("T2_", sublists[1]);
+		System.out.print("Bag 2 complete.\n");
 		
-		System.out.print("BD: Bag Difference... ");
-		//long resultSize = 
-		BagDifference.comparator(bag1,bag2);
+		/*
+		 * DO SORTED JOIN
+		 */
+		System.out.print("Sorted Join... ");
+		long numSortedTuples = 
+				SortedJoin.DoJoin(bag1, 
+				bag2, 
+				"Output-SortedJoin.txt",
+				"Output-GPA-SortedJoin.txt");		
+		System.out.print("done.\n");
+		double sortedJoinTime = (System.nanoTime() - startTime) / 1000000000.0;
+		long ioCountSorted = FileManagerV3.getCounter();
+		long sortedFileSize = FileManagerV3.getFileSize("Output-SortedJoin.txt");
 		
-		long endTime = System.nanoTime();
-		long ioCountTotal = FileManagerV2.getCounter();
-		
-		// Final output
-		double tpmmsTime = (endTpmmsTime - startTime) / 1000000000.0;
-		double totalTime = (endTime - startTime) / 1000000000.0;
+		/*
+		 * FINAL OUTPUT
+		 */
 		System.out.println("");
 		System.out.println("------------------");
 		System.out.println("PERFORMANCE REPORT");
 		System.out.println("------------------");
 		System.out.println("");
-		System.out.println("Input");
-		System.out.println("-----");
-		System.out.println(" ");
-		System.out.println("Total tuples: " + Sort.getTuples());
-		System.out.println("Total blocks: " + Math.ceil(Sort.getTuples() / Parameters.tuplesPerBlock));
-		System.out.println(" ");
-		System.out.println(" ");
-		System.out.println("TPMMS");
-		System.out.println("-----");
-		System.out.println(" ");
-		System.out.println("Time taken: " + tpmmsTime + "s");
-		System.out.println("I/O operations: " + ioCountTPMMS);
-		System.out.println(" ");
-		System.out.println(" ");
-		System.out.println("Total");
-		System.out.println("-----");
-		System.out.println(" ");
-		System.out.println("Time taken: " + totalTime + "s");
-		System.out.println("I/O operations: " + ioCountTotal);
+		System.out.println("  NESTED JOIN");
+		System.out.println("---------------");
+		System.out.println("Time taken: " + nestedJoinTime + "s");
+		System.out.println("I/O operations: " + ioCountNested);
+		System.out.println("Tuples in final output: " + 0.0);
+		System.out.println("File size final output: " + nestedFileSize + "bytes");
+		System.out.println("");
+		System.out.println("  SORTED JOIN");
+		System.out.println("---------------");
+		System.out.println("Time taken: " + sortedJoinTime + "s");
+		System.out.println("I/O operations: " + ioCountSorted);
+		System.out.println("Tuples in final output: " + numSortedTuples);
+		System.out.println("File size final output: " + sortedFileSize + "bytes");
 		System.out.println("");
 		System.out.println("--COMPLETE--");
-		*/
 	}
 	
 	public static void TestNestedJoin(){
@@ -81,7 +97,7 @@ public class Main {
 		System.out.println("Maximum fitting Blocks in memory: " + Parameters.getMaxBlocksCountT1() + " Blocks");
 	}
 	
-	public static void TestFileManagerV2(){
+	public static void TestFileManagerV3(){
 		ArrayList<Tuple> students = new ArrayList<Tuple>();
 		try{
 			students.add(new Tuple(11111, "John", "Smith", 111, 222, 123456789, "3340, Maisonneuve, Montreal, QC"));
@@ -96,9 +112,9 @@ public class Main {
 			
 		}
 		
-		IFileManager f1 = new FileManagerV2("F1.txt");
-		IFileManager f2 = new FileManagerV2("F2.txt");
-		IFileManager f3 = new FileManagerV2("F3.txt");
+		IFileManager f1 = new FileManagerV3("F1.txt");
+		IFileManager f2 = new FileManagerV3("F2.txt");
+		IFileManager f3 = new FileManagerV3("F3.txt");
 		
 		
 		f1.cleanFile();

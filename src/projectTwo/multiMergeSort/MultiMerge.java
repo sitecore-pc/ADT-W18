@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import projectTwo.common.Parameters;
-import projectTwo.file.FileManagerV2;
+import projectTwo.file.FileManagerV3;
 
 public class MultiMerge {
 
@@ -46,14 +46,14 @@ public class MultiMerge {
 	 */
 	private static String partialMerge(List<String> sublist) throws Exception {
 		String[] entryCache = new String[sublist.size()];
-		FileManagerV2[] readControllers = new FileManagerV2[sublist.size()];
+		FileManagerV3[] readControllers = new FileManagerV3[sublist.size()];
 		String targetFilename = "mergetemp_" + System.nanoTime() + ".txt";
-		FileManagerV2 target = new FileManagerV2(targetFilename);
+		FileManagerV3 target = new FileManagerV3(targetFilename);
 		
 		// open each file of the sublist
 		int i = 0;
 		for (String file : sublist) {
-			readControllers[i] = new FileManagerV2(file);
+			readControllers[i] = new FileManagerV3(file);
 			//entryCache[i] = new String();
 			
 			entryCache[i] = readControllers[i].readNextLine();

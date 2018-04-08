@@ -3,7 +3,7 @@ package projectTwo.multiMergeSort;
 import java.util.Arrays;
 
 import projectTwo.common.Parameters;
-import projectTwo.file.FileManagerV2;
+import projectTwo.file.FileManagerV3;
 
 public class Sort {
 	private static long _tuples = 0;
@@ -24,7 +24,7 @@ public class Sort {
 	private static int ReadSortFile(String FileName,long getMaxTuplesCount, int maxTupleBytes) {
 		int noOfSubFiles = 0;
 		try {
-			FileManagerV2 inputFile = new FileManagerV2(FileName);
+			FileManagerV3 inputFile = new FileManagerV3(FileName);
 			int noOfLines =  (int)Math.floor((double)getMaxTuplesCount / 3.0); // no of lines in subfiles
 			long totalNoOfRows = inputFile.getTotalNumberOfRows(maxTupleBytes);
 			_tuples = _tuples + totalNoOfRows;
@@ -35,7 +35,7 @@ public class Sort {
 				// creation of file
 				subFileName = FileName.substring(FileName.lastIndexOf('/') + 1, FileName.lastIndexOf('.')) + "_" + j
 						+ ".txt";
-				FileManagerV2 subFile = new FileManagerV2(subFileName);
+				FileManagerV3 subFile = new FileManagerV3(subFileName);
 				// read lines
 				String[] lines1 = inputFile.readNextLines(noOfLines);
 				// sort files

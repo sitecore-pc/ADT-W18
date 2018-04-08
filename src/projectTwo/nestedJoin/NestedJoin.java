@@ -5,17 +5,19 @@ import projectTwo.common.MarkUtils;
 import projectTwo.file.*;
 
 public class NestedJoin {
-	public static void DoJoin(String filenameT1, String filenameT2, String outputFilename, String gpaFileName)
+	/// Returns total number of tuples in the output relation
+	public static long DoJoin(String filenameT1, String filenameT2, String outputFilename, String gpaFileName)
 	{
-		IFileManager T1 = new FileManagerV2(filenameT1);
-		IFileManager T2 = new FileManagerV2(filenameT2);
-		IFileManager joinOutput = new FileManagerV2(outputFilename);
-		IFileManager gpaOutput = new FileManagerV2(gpaFileName);
+		IFileManager T1 = new FileManagerV3(filenameT1);
+		IFileManager T2 = new FileManagerV3(filenameT2);
+		IFileManager joinOutput = new FileManagerV3(outputFilename);
+		IFileManager gpaOutput = new FileManagerV3(gpaFileName);
 		
 		String nextT1 = T1.readNextLine();
 
 		int currentCredits = 0;
 		float currentPoints = 0;
+		long outputTuples = 0;
 		
 		while(nextT1 != null)
 		{
@@ -29,6 +31,7 @@ public class NestedJoin {
 				{
 					String joinedString = nextT1 + nextT2.substring(8);
 					joinOutput.writeLine(joinedString);
+					outputTuples++;
 					
 					float thisCredits = MarkUtils.ExtractCreditsFromTuple(nextT2);
 					currentCredits += thisCredits;
@@ -45,9 +48,12 @@ public class NestedJoin {
 			}
 			
 			//T2.setFile(filenameT2);//TODO: why does it clean?
-			T2 = new FileManagerV2(filenameT2);//TODO: Its not good. We have to dispose the previous one. (Memory Waste)
+			T2.finalize();
+			T2 = new FileManagerV3(filenameT2);//TODO: Its not good. We have to dispose the previous one. (Memory Waste)
 			
 			nextT1 = T1.readNextLine();
 		}
+		
+		return outputTuples;
 	}
 }

@@ -1,20 +1,24 @@
 package projectTwo.sortedJoin;
 
-import projectTwo.file.FileManagerV2;
+import projectTwo.file.FileManagerV3;
 import projectTwo.file.IFileManager;
 import projectTwo.common.GPAFile;
 import projectTwo.common.MarkUtils;
 
 public class SortedJoin {
-	public static void DoJoin(String filenameT1, String filenameT2, String outputFilename, String gpaFilename) {
-		IFileManager T1 = new FileManagerV2(filenameT1);
-		IFileManager T2 = new FileManagerV2(filenameT2);
-		IFileManager output = new FileManagerV2(outputFilename);
-		IFileManager gpa = new FileManagerV2(gpaFilename);
+	/***
+	 * Does a sorted join operation, returns the number of tuples in the output 
+	 */
+	public static long DoJoin(String filenameT1, String filenameT2, String outputFilename, String gpaFilename) {
+		IFileManager T1 = new FileManagerV3(filenameT1);
+		IFileManager T2 = new FileManagerV3(filenameT2);
+		IFileManager output = new FileManagerV3(outputFilename);
+		IFileManager gpa = new FileManagerV3(gpaFilename);
 		
 		String nextT1 = T1.readNextLine();
 		String nextT2 = T2.readNextLine();
 		
+		long numOutputTuples = 0;
 		int currentCredits = 0;
 		float currentPoints = 0;
 		
@@ -37,6 +41,7 @@ public class SortedJoin {
 			else {
 				String joinedString = nextT1 + nextT2.substring(8);
 				output.writeLine(joinedString);
+				numOutputTuples++;
 				
 				float thisCredits = MarkUtils.ExtractCreditsFromTuple(nextT2);
 				currentCredits += thisCredits;
@@ -49,5 +54,7 @@ public class SortedJoin {
 		T1.finalize();
 		T2.finalize();
 		output.finalize();
+		
+		return numOutputTuples;
 	}
 }
