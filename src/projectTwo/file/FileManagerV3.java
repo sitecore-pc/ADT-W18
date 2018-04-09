@@ -214,12 +214,9 @@ public class FileManagerV3 implements IFileManager {
 				if ((str = br.readLine()) == null)
 					break;
 				res.add(str);
-
 			}
-			String[] array = new String[res.size()];
-			for (int j = 0; j < res.size(); j++) {
-				array[j] = res.get(j);
-			}
+			String [] array = res.toArray(new String[0]);
+			
 			return array;
 		}
 		catch(Exception ex)

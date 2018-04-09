@@ -79,7 +79,7 @@ public class NestedJoin {
 						}
 					}
 					
-					System.out.println("Buffer qty. of T1 ="+maxLinesQuantityT1+" & T2 ="+maxLinesQuantityT2+"...T1 round="+i+" ..T2 round="+countForT2+"...& j="+j);
+					//System.out.println("Buffer qty. of T1 ="+maxLinesQuantityT1+" & T2 ="+maxLinesQuantityT2+"...T1 round="+i+" ..T2 round="+countForT2+"...& j="+j);
 					if(j==nextT2Arr.length-1) {
 						nextT2Arr = T2.readNextLines(maxLinesQuantityT2);
 						j=0;
