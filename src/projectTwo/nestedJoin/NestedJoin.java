@@ -41,7 +41,7 @@ public class NestedJoin {
 		long totalJoinedTuples = 0;
 		
 		T1 = new FileManagerV3(filenameT1);
-		IFileManager T2;
+		IFileManager T2 = new FileManagerV3(filenameT2);
 		IFileManager joinOutput = new FileManagerV3(outputFilename);
 		IFileManager gpaOutput = new FileManagerV3(gpaFileName);
 		boolean currentBufferedT2DataEmpty = true;
@@ -53,8 +53,8 @@ public class NestedJoin {
 			Map<Integer, LinkedHashMap<String, int[]>> t1BufferMap = createT1BufferMap();
 		
 			if(null != t1BufferMap) {
-				
-				T2 = new FileManagerV3(filenameT2);
+				//T2 = new FileManagerV3(filenameT2);
+				T2.setFile(filenameT2);
 				nextT2Arr = T2.readNextLines(maxLinesQuantityT2);
 				int j = 0;
 			
@@ -102,7 +102,7 @@ public class NestedJoin {
 						GPAFile.SaveGpaRecord(key, subMapEntry.getValue()[0], (float)subMapEntry.getValue()[1], gpaOutput);
 					}
 				}
-				T2 = null;
+				//T2 = null;
 			}
 			else
 				break;
@@ -136,8 +136,7 @@ public class NestedJoin {
 //				currentPoints = 0;
 //			}
 //			
-//			//T2.setFile(filenameT2);//TODO: why does it clean?
-//			T2 = new FileManagerV2(filenameT2);//TODO: Its not good. We have to dispose the previous one. (Memory Waste)
+//			T2.setFile(filenameT2);
 //			
 //			nextT1 = T1.readNextLine();
 //		}
