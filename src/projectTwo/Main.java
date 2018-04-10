@@ -18,12 +18,12 @@ public class Main {
 		 */		
 		System.out.print("NestedJoin: Joining... ");
 		long startTime = System.nanoTime();
-		long numNestedTuples = 1100466;
-				/*NestedJoin.DoJoin(
+		long numNestedTuples = 
+				NestedJoin.DoJoin(
 				Parameters.dataFiles[0],
 				Parameters.dataFiles[1],
 				"Output-NestedJoin.txt",
-				"Output-GPA-NestedJoin.txt");*/
+				"Output-GPA-NestedJoin.txt");
 		System.out.print("done.\n"); 
 		double nestedJoinTime = (System.nanoTime() - startTime) / 1000000000.0 ;
 		long ioCountNested = FileManagerV3.getCounter();
