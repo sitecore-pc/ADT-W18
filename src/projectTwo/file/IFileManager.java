@@ -20,6 +20,10 @@ public interface IFileManager {
 	//Reads multiple lines instead of one line, starting from the current line (file stays open) 
 	String[] readNextLines(int maxLinesQuantity);
 	
+	//Also reads multiple lines, block by block, starting from the current byte. 
+	//It is highly recommended to be accurate in giving the tupleSize (file stays open)
+	String[] blockReadNextLines(int maxLinesQuantity, int tupleSize, int blockSize);
+	
 	//Writes one line (only) at the end of the file (file stays open)
 	boolean writeLine(String line);
 	

@@ -4,8 +4,10 @@ public class Parameters {
 	
 	public static String dataFiles[] = {"resources/T1.txt", "resources/T2.txt"};
 	
-	public static int tuplesPerBlockT1 = 40;
-	public static int tuplesPerBlockT2 = 135;
+	public static int blockSize = 4096;
+	
+	public static int tuplesPerBlockT1 = 40;//It is calculated by block size of 4096 bytes.
+	public static int tuplesPerBlockT2 = 135;//TODO: It's wrong. it must be (146) if the block size is 4096 bytes.
 	
 	public static int maxTupleBytesT1 = 101;
 	public static int maxTupleBytesT2 = 28; 

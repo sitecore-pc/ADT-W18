@@ -1,20 +1,10 @@
 package projectTwo.file;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.DirectoryNotEmptyException;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.io.*;
+import java.net.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+import java.util.*;
 
 public class FileManagerV3 implements IFileManager {
 	private static String _projectPath = null;
@@ -45,11 +35,16 @@ public class FileManagerV3 implements IFileManager {
 		return _printWriter;
 	}
 	
+	private InputStream _inputStream = null;
 	private FileReader _fileReader = null;
 	private BufferedReader _bufferedReader = null;
 	private BufferedReader getReader(){
 		if(_bufferedReader == null) initReader();
 		return _bufferedReader;
+	}
+	private InputStream getByteReader(){
+		if(_inputStream == null) initReader();
+		return _inputStream;
 	}
 	
 	private static long _counter = 0;
@@ -96,6 +91,7 @@ public class FileManagerV3 implements IFileManager {
 		String fileAddress = getFullFileAddress();
 		if(fileAddress == null || fileAddress.isEmpty()) return false;
 		try {
+			_inputStream = new FileInputStream(fileAddress);
 			_fileReader = new FileReader(fileAddress);
 		    _bufferedReader = new BufferedReader(_fileReader);
 		    return true;
@@ -226,6 +222,43 @@ public class FileManagerV3 implements IFileManager {
 		return null;
 	}
 
+	public String[] blockReadNextLines(int maxLinesQuantity, int tupleSize, int blockSize){
+        System.gc();
+		if(maxLinesQuantity <= 0 || blockSize <= 0 || tupleSize <= 0) return new String[0];
+		
+		try {
+			InputStream inputStream = getByteReader();
+
+            int totalBytes = tupleSize * maxLinesQuantity;
+            int blocks = (int)Math.floor((double)totalBytes/(double)blockSize);
+            int lastBlockSize = totalBytes%blockSize;
+            
+			StringBuffer sb = new StringBuffer(totalBytes);
+			
+            byte[] buffer = new byte[blockSize];
+            byte[] lastBuffer = new byte[lastBlockSize];
+ 
+            while (blocks != 0 && inputStream.read(buffer) != -1) {
+                sb.append(new String(buffer, StandardCharsets.US_ASCII));
+                blocks--;
+            }
+            
+            if(inputStream.read(lastBuffer) != -1)
+            {
+            	sb.append(new String(lastBuffer, StandardCharsets.US_ASCII));
+            }
+            
+            String temp = sb.toString();
+            sb = null;
+            System.gc();
+            return temp.split("\n");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+		
+		return null;
+	}
+	
 	public boolean writeLine(String line) {
 		if(line == null) return false;
 		PrintWriter pr = getWriter();

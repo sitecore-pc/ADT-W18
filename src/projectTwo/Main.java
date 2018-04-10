@@ -13,6 +13,7 @@ import projectTwo.sortedJoin.SortedJoin;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
+		
 		/*
 		 * DO NESTED JOIN
 		 */		
@@ -113,6 +114,61 @@ public class Main {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+	}
+	
+	public static void TestBlockReadNextLines(){
+		System.gc();
+		
+		IFileManager studentsFile = new FileManagerV3(Parameters.dataFiles[0]);
+		IFileManager marksFile = new FileManagerV3(Parameters.dataFiles[1]);
+		
+		System.out.println("----------\nBlocks reading\n----------");
+		System.out.println("Available memory: " + Parameters.getAvailableMemory());
+		long startTime = System.nanoTime();
+		String[] students = studentsFile.blockReadNextLines(5000,Parameters.maxTupleBytesT1, Parameters.blockSize);//82
+		double totalTime = (System.nanoTime() - startTime) / 1000000.0;
+		System.out.println(students.length + " students retrieved in " + totalTime + " milliseconds");
+		System.out.println("Available memory: " + Parameters.getAvailableMemory());
+		startTime = System.nanoTime();
+		String[] marks = marksFile.blockReadNextLines(1000,Parameters.maxTupleBytesT2, Parameters.blockSize);//142
+		totalTime = (System.nanoTime() - startTime) / 1000000.0;
+		System.out.println(marks.length + " marks retrieved in " + totalTime + " milliseconds");
+		System.out.println("Available memory: " + Parameters.getAvailableMemory());
+		
+		students = null;
+		marks = null;
+		studentsFile.finalize();
+		studentsFile = null;
+		marksFile.finalize();
+		marksFile = null;
+		System.gc();
+		
+		IFileManager studentsFile2 = new FileManagerV3(Parameters.dataFiles[0]);
+		IFileManager marksFile2 = new FileManagerV3(Parameters.dataFiles[1]);
+		
+		System.out.println("\n----------\nLines reading\n----------");
+		System.out.println("Available memory: " + Parameters.getAvailableMemory());
+		startTime = System.nanoTime();
+		students = studentsFile2.readNextLines(1000);
+		totalTime = (System.nanoTime() - startTime) / 1000000.0;
+		System.out.println(students.length + " students retrieved in " + totalTime + " milliseconds");
+		System.out.println("Available memory: " + Parameters.getAvailableMemory());
+		startTime = System.nanoTime();
+		marks = marksFile2.readNextLines(1000);
+		totalTime = (System.nanoTime() - startTime) / 1000000.0;
+		System.out.println(marks.length + " marks retrieved in " + totalTime + " milliseconds");
+		System.out.println("Available memory: " + Parameters.getAvailableMemory());
+
+		students = null;
+		marks = null;
+		studentsFile2.finalize();
+		studentsFile2 = null;
+		marksFile2.finalize();
+		marksFile2 = null;
+		System.gc();
+		
+		System.out.println("Finalized available memory: " + Parameters.getAvailableMemory());
+		System.out.println("Done!");
 	}
 	
 	public static void TestFileManagerV3(){
