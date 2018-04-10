@@ -18,8 +18,8 @@ public class Main {
 		 */		
 		System.out.print("NestedJoin: Joining... ");
 		long startTime = System.nanoTime();
-		long numNestedTuples =
-				NestedJoin.DoJoin(Parameters.dataFiles[0],
+		long numNestedTuples = NestedJoin.DoJoin(
+				Parameters.dataFiles[0],
 				Parameters.dataFiles[1],
 				"Output-NestedJoin.txt",
 				"Output-GPA-NestedJoin.txt");
