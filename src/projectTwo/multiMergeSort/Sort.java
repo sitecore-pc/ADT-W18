@@ -17,7 +17,7 @@ public class Sort {
 		System.gc();
 		sublists[0] = Sort.ReadSortFile(Parameters.dataFiles[0],Parameters.getMaxTuplesCountT1(),Parameters.maxTupleBytesT1, 3.0 );
 		System.gc();
-		sublists[1] = Sort.ReadSortFile(Parameters.dataFiles[1],Parameters.getMaxTuplesCountT2(), Parameters.maxTupleBytesT2, 3.5);
+		sublists[1] = Sort.ReadSortFile(Parameters.dataFiles[1],Parameters.getMaxTuplesCountT2(), Parameters.maxTupleBytesT2, 3.6);
 		System.gc();
 		return sublists;
 	}
@@ -28,16 +28,22 @@ public class Sort {
 			FileManagerV3 inputFile = new FileManagerV3(FileName);
 			int noOfLines =  (int)Math.floor((double)getMaxTuplesCount / overheadFactor);
 			long totalNoOfRows = inputFile.getTotalNumberOfRows(maxTupleBytes);
-			_tuples = _tuples + totalNoOfRows;
-			noOfSubFiles = (int) Math.ceil((double) totalNoOfRows / (double) noOfLines);
+			_tuples = _tuples + totalNoOfRows; 
 			String subFileName = "";
-			// splitting of file into smaller files
-			for (int j = 1; j <= noOfSubFiles; j++) {
+
+			FileManagerV3 subFile;
+			while (true) {
+				noOfSubFiles++;
 				// creation of file
-				subFileName = FileName.substring(FileName.lastIndexOf('/') + 1, FileName.lastIndexOf('.')) + "_" + j + ".txt";
-				FileManagerV3 subFile = new FileManagerV3(subFileName);
+				subFileName = FileName.substring(FileName.lastIndexOf('/') + 1, FileName.lastIndexOf('.')) + "_" + noOfSubFiles + ".txt";
+				subFile = new FileManagerV3(subFileName);
 				// read lines
 				String[] lines1 = inputFile.readNextLines(noOfLines);
+				if (lines1.length == 0) {
+					noOfSubFiles--;
+					subFile.finalize();
+					break;
+				}
 				// sort files
 				Arrays.sort(lines1);
 				// write

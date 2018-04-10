@@ -8,7 +8,7 @@ public class Parameters {
 	public static int tuplesPerBlockT2 = 135;
 	
 	public static int maxTupleBytesT1 = 101;
-	public static int maxTupleBytesT2 = 29; 
+	public static int maxTupleBytesT2 = 28; 
 	
 	public static long getAvailableMemory(){
 		return Runtime.getRuntime().freeMemory();
