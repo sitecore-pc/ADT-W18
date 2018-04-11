@@ -9,6 +9,7 @@ import projectTwo.common.GPAFile;
 import projectTwo.common.MarkUtils;
 import projectTwo.file.*;
 
+
 public class NestedJoin {
 	
 	static IFileManager T1;
@@ -16,11 +17,12 @@ public class NestedJoin {
 	static int maxLinesQuantityT1 = 5000;
 	static int i = 0;
 	static int countForT2;
-	
+//	
 	private static Map<Integer, LinkedHashMap<String, int[]>> createT1BufferMap() {
 		
-		i++;
-		countForT2 = 1;
+//		i++;
+//		countForT2 = 1;
+		
 		nextT1Arr = T1.readNextLines(maxLinesQuantityT1);
 		if(null != nextT1Arr && nextT1Arr.length!=0) {
 			Map<Integer, LinkedHashMap<String, int[]>> t1BufferMap = new HashMap<Integer, LinkedHashMap<String, int[]>>();
@@ -45,7 +47,7 @@ public class NestedJoin {
 		IFileManager joinOutput = new FileManagerV3(outputFilename);
 		IFileManager gpaOutput = new FileManagerV3(gpaFileName);
 		boolean currentBufferedT2DataEmpty = true;
-		int maxLinesQuantityT2 = 11005;
+		int maxLinesQuantityT2 = 10000;
 		
 		String[] nextT2Arr;
 		
@@ -53,8 +55,8 @@ public class NestedJoin {
 			Map<Integer, LinkedHashMap<String, int[]>> t1BufferMap = createT1BufferMap();
 		
 			if(null != t1BufferMap) {
-				//T2 = new FileManagerV3(filenameT2);
-				T2.setFile(filenameT2);
+				T2 = new FileManagerV3(filenameT2);
+//				T2.setFile(filenameT2);
 				nextT2Arr = T2.readNextLines(maxLinesQuantityT2);
 				int j = 0;
 			
@@ -79,12 +81,12 @@ public class NestedJoin {
 						}
 					}
 					
-					//System.out.println("Buffer qty. of T1 ="+maxLinesQuantityT1+" & T2 ="+maxLinesQuantityT2+"...T1 round="+i+" ..T2 round="+countForT2+"...& j="+j);
+//					System.out.println("Buffer qty. of T1 ="+maxLinesQuantityT1+" & T2 ="+maxLinesQuantityT2+"...T1 round="+i+" ..T2 round="+countForT2+"...& j="+j);
 					if(j==nextT2Arr.length-1) {
 						nextT2Arr = T2.readNextLines(maxLinesQuantityT2);
 						j=0;
 						currentBufferedT2DataEmpty=false;
-						countForT2++;
+//						countForT2++;
 					}
 					if(currentBufferedT2DataEmpty)
 						j = j+1;
@@ -92,6 +94,8 @@ public class NestedJoin {
 						break;
 
 				}
+				
+//				System.gc();
 				
 				for (Entry<Integer, LinkedHashMap<String, int[]>> entry : t1BufferMap.entrySet())	{
 					Integer key = entry.getKey();//key = idT1
@@ -105,7 +109,17 @@ public class NestedJoin {
 				//T2 = null;
 			}
 			else
+			{
+				System.gc();
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
+			}
+				
 		}
 		
 		
@@ -131,7 +145,7 @@ public class NestedJoin {
 //			}
 //			
 //			if (currentCredits > 0) {
-//				GPAFile.SaveGpaRecord(idT1, currentCredits, currentPoints, gpaOutput);
+//				GPAFile.SaveGpaRecord(idT1, currentCruedits, currentPoints, gpaOutput);
 //				currentCredits = 0;
 //				currentPoints = 0;
 //			}
